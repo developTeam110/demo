@@ -37,6 +37,7 @@ public class StringUtil {
 				|| (ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS) || (ub == Character.UnicodeBlock.GENERAL_PUNCTUATION)) {
 			isChinese = true;
 		}
+		System.out.println(isChinese);
 		return isChinese;
 	}
 	/**
