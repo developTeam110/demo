@@ -1,10 +1,10 @@
-package com.demo.back.common.util.web;
+package com.demo.common.util.web;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.util.StringUtils;
 
-import com.demo.back.common.vo.Page;
+import com.demo.common.vo.Page;
 
 public class Pagination {
 

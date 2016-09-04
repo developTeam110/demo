@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.demo.back.common.util.web;
+package com.demo.common.util.web;
 
 import java.io.Serializable;
 

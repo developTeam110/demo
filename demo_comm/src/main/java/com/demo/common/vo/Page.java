@@ -1,4 +1,4 @@
-package com.demo.back.common.vo;
+package com.demo.common.vo;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -7,9 +7,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.demo.back.common.util.web.Pagination;
-import com.demo.back.common.util.web.RequestKV;
-import com.demo.back.common.util.web.WebUtils;
+import com.demo.common.util.web.Pagination;
+import com.demo.common.util.web.RequestKV;
+import com.demo.common.util.web.WebUtils;
 
 /**
  * 分页类
