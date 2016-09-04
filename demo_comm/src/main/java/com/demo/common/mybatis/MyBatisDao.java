@@ -76,20 +76,20 @@ public class MyBatisDao extends SqlSessionTemplateDaoSupport {
 		}
 		return 0;
 	}
-	protected <T> T get(String key, Object params) { // update by yongchun
+	protected <T> T get(String key, Object params) {
 		List<T> list = this.getList(key, params);
 		if(CollectionUtils.isEmpty(list)){
 			return null;
 		}
-		
+
 		if (list.size() == 1) {
 			return list.get(0);
 		} 
-		
+
 		if (list.size() > 1) {
 			throw new TooManyResultsException("Expected one result (or null) to be returned by selectOne(), but found: "+ list.size());
 		}
-		
+
 		return null;
 	}
 

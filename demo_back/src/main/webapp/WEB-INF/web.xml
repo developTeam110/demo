@@ -22,13 +22,13 @@
   <!-- 初始化Spring context和SpringBeanProxy -->
   <listener>
     <description>Used to initialize Spring context and set SpringBeanProxy.</description>
-    <listener-class>com.demo.back.common.spring.SuperContextLoaderListener</listener-class>
+    <listener-class>com.demo.common.spring.SuperContextLoaderListener</listener-class>
   </listener>
 
   <!-- 加载主spring配置文件 -->
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath*:applicationContext-vst-rest-beans.xml</param-value>
+    <param-value>classpath*:applicationContext-back-beans.xml</param-value>
   </context-param>
 
   <!-- 配置springmvc context -->
