@@ -25,10 +25,10 @@
     <!-- 版本号配置  -->
     <properties>
         <spring.version>3.2.4.RELEASE</spring.version><!-- spring版本号 -->
-        <cglib.version>2.2.2</cglib.version><!-- cglib版本号 -->
         <mybatis.version>3.2.4</mybatis.version><!-- mybatis版本号 -->
         <mybatis.spring.version>1.2.2</mybatis.spring.version><!-- mybatis整合spring版本号 -->
         <mysql.version>5.1.29</mysql.version><!-- mysql驱动版本号 -->
+        <cglib.version>2.2.2</cglib.version><!-- cglib版本号 -->
         <junit.version>4.11</junit.version><!--单元测试版本号 -->
         <jackson.version>1.9.13</jackson.version><!--jackson版本号 -->
         <!-- log4j日志文件管理包版本 -->
@@ -42,6 +42,9 @@
         <servlet.api.version>2.5</servlet.api.version><!--servlet.api版本号 -->
         <jsp.api.version>2.1</jsp.api.version><!--jsp.api版本号 -->
         <java.apns.version>1.0.0.Beta6</java.apns.version>
+        <redis.version>1.5.2</redis.version><!-- redis版本号 -->
+        <guava.version>19.0</guava.version><!-- Google集合操作版本号 -->
+        <fastjson.version>1.1.35</fastjson.version>
     </properties>
 
     <!-- 依赖jar配置  -->
@@ -218,6 +221,25 @@
             <groupId>com.notnoop.apns</groupId>
             <artifactId>apns</artifactId>
             <version>${java.apns.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${redis.version}</version>
+        </dependency>
+
+        <!-- 集合操作插件-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
     </dependencies>
 </project>
