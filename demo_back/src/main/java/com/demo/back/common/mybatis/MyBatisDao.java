@@ -14,7 +14,6 @@ import org.springframework.util.CollectionUtils;
 
 /**
  * MyBatis的Dao基类
- * 
  */
 @Repository
 public class MyBatisDao extends SqlSessionTemplateDaoSupport {
