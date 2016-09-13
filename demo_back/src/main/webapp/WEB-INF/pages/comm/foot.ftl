@@ -6,3 +6,4 @@
 <script src="${rc.contextPath}/static/js/hplus.min.js?v=4.1.0"></script>
 <script src="${rc.contextPath}/static/js/contabs.min.js" ></script>
 <script src="${rc.contextPath}/static/js/plugins/pace/pace.min.js"></script>
+<script src="${rc.contextPath}/static/js/plugins/paginator/bootstrap-paginator.min.js"></script>

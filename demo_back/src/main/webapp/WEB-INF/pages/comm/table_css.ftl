@@ -1,0 +1,1 @@
+<link href="${rc.contextPath}/static/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
