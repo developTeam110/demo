@@ -5,8 +5,8 @@
 
 <configuration>
 
-    <typeAliases>
-	 <!-- <typeAlias alias="role" type="com.lvmama.vst.back.category.po.Role" /> -->
-	</typeAliases> 
+	<typeAliases>
+		<typeAlias alias="User" type="com.demo.back.po.User" />
+	</typeAliases>
 
 </configuration>

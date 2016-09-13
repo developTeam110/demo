@@ -33,20 +33,20 @@ http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="classpath:sqlmap-config.xml" />
-		<property name="mapperLocations"> 
-			<value>classpath*:com/demo/back/**/map/*.xml</value>
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<property name="mapperLocations">
+			<value>classpath*:com/demo/back/**/dao/mappers/*Mapper.xml</value>
 		</property>
-		<!-- 
-		<property name="plugins">
-			<list>
-				<value>com.lvmama.vst.comm.mybatis.PaginationInterceptor</value>
-			</list>
-		</property>
-		 -->
+		<property name="typeAliasesPackage" value="com.demo.back.dao"/>
 	</bean>
 
-	<bean id="sqlSession"  class="org.mybatis.spring.SqlSessionTemplate">
+    <!-- 配置mybatis自动扫描并实例化mapper （备注:多个用逗号或分号分割）-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.demo.back.dao"/>
+    </bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 

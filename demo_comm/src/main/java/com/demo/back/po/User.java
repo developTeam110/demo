@@ -1,4 +1,4 @@
-package com.demo.admin.po;
+package com.demo.back.po;
 
 import java.util.Date;
 
@@ -45,7 +45,7 @@ public class User {
 	private Boolean innerFlag;
 
 	/**
-	 * 状态
+	 * 状态 {@link STATUS}
 	 */
 	private Integer status;
 
@@ -69,13 +69,16 @@ public class User {
 	 */
 	private Date updateTime;
 
+	/**
+	 * 用户状态枚举
+	 */
 	public static enum STATUS {
 
 		NORMAL(1, "正常"),
 
 		FREEZE(2, "已冻结"),
 
-		delete(3, "已删除");
+		DELETE(3, "已删除");
 
 		private Integer code;
 

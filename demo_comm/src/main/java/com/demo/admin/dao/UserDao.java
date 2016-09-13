@@ -2,7 +2,7 @@ package com.demo.admin.dao;
 
 import org.springframework.stereotype.Repository;
 
-import com.demo.admin.po.User;
+import com.demo.back.po.User;
 import com.demo.common.mybatis.MyBatisDao;
 
 @Repository
