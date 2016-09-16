@@ -23,7 +23,6 @@ public class IndexController {
 
 	@RequestMapping(value = "login", method = { RequestMethod.GET })
 	public String doGetlogin(Model model) {
-		model.addAttribute("path", "222");
 		return "/login";
 	}
 
@@ -34,7 +33,7 @@ public class IndexController {
 
 	@RequestMapping(value = "get", method = { RequestMethod.GET, RequestMethod.POST })
 	public String getTest(Model model, String username, String password) {
-		User user = userService.getUserByUsername(username);
+		User user = userService.getUserFromCacheOrDbByUsername(username);
 		System.out.println(user);
 		return "/login";
 	}

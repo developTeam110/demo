@@ -7,4 +7,7 @@ public interface UserService {
 	int saveUser(User user);
 
 	User getUserByUsername(String username);
+
+	User getUserFromCacheOrDbByUsername(String username);
+
 }

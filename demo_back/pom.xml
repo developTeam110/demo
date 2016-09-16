@@ -43,6 +43,7 @@
         <servlet.api.version>2.5</servlet.api.version><!--servlet.api版本号 -->
         <jsp.api.version>2.1</jsp.api.version><!--jsp.api版本号 -->
         <java.apns.version>1.0.0.Beta6</java.apns.version>
+        <redis.version>1.5.2</redis.version>
     </properties>
 
     <!-- 依赖jar配置  -->
@@ -224,6 +225,13 @@
             <artifactId>apns</artifactId>
             <version>${java.apns.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${redis.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>
