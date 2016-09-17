@@ -26,6 +26,26 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
     </context:component-scan>
 
+<!--     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"/>
+    </bean>
+
+     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+      <property name="messageConverters">
+       <list >
+        <ref bean="mappingJacksonHttpMessageConverter" />
+       </list>
+      </property>
+     </bean>
+     <bean id="mappingJacksonHttpMessageConverter"
+      class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+      <property name="supportedMediaTypes">
+       <list>
+        <value>text/html;charset=UTF-8</value>
+       </list>
+      </property>
+     </bean> 
+      -->
     <mvc:view-controller path="/" view-name="forward:/index" />
 
     <!-- 对某些静态资源，如css,图片等进行过滤 ,有引用 "/resources/**" 的路径引用转到工程的/resources/目录取资源 -->

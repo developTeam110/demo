@@ -110,6 +110,17 @@
         </where>
     </select>
 
+    <select id="getByloginNameAndPwd" parameterType="string" resultMap="UserResultMap">
+        SELECT * FROM `t_user`
+        <where>
+            `username` = #{loginName} OR
+            `login_string` = #{loginName} OR
+            `email` = #{loginName} OR
+            `phone` = #{loginName} AND
+            `password` = #{pwd}
+        </where>
+    </select>
+
     <select id="getPageList" parameterType="User" resultMap="UserResultMap">
         SELECT * FROM `t_user`
         <where>

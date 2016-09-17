@@ -30,6 +30,11 @@ public class UserSeriviceImpl implements UserService{
 	}
 
 	@Override
+	public User getUserByloginNameAndPwd(String loginName, String pwd) {
+		return userMapper.getByloginNameAndPwd(loginName, pwd);
+	}
+
+	@Override
 	public User getUserFromCacheOrDbByUsername(String username) {
 		Preconditions.checkArgument(StringUtil.isNotEmpty(username), "username is empty.");
 

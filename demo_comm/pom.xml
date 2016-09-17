@@ -45,6 +45,8 @@
         <redis.version>1.5.2</redis.version><!-- redis版本号 -->
         <guava.version>19.0</guava.version><!-- Google集合操作版本号 -->
         <fastjson.version>1.1.35</fastjson.version>
+        <fileupload.version>1.2.2</fileupload.version>
+        <io.version>2.0</io.version>
     </properties>
 
     <!-- 依赖jar配置  -->
@@ -240,6 +242,18 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>${fileupload.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${io.version}</version>
         </dependency>
     </dependencies>
 </project>

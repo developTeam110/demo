@@ -1,5 +1,7 @@
 package com.demo.back.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.demo.back.po.User;
 
 public interface UserMapper {
@@ -7,4 +9,6 @@ public interface UserMapper {
 	int save(User user);
 
 	User getByUsername(String username);
+
+	User getByloginNameAndPwd(@Param("loginName")String loginName, @Param("pwd")String pwd);
 }

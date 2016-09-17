@@ -33,13 +33,13 @@
                 </div>
             </div>
             <div class="col-sm-5">
-                <form method="post" action="${rc.contextPath}/admin/login.do">
+                <form id="loginForm">
                     <h4 class="no-margins">登录：</h4>
-                    <p class="m-t-md"></p>
-                    <input type="text" name="username" class="form-control uname" placeholder="用户名" />
+                    <p class="m-t-md" id="errorTip"></p>
+                    <input type="text" name="loginName" class="form-control uname" placeholder="用户名" />
                     <input type="password" name="password" class="form-control pword m-b" placeholder="密码" />
                     <a href="#">忘记密码了？</a>
-                    <button class="btn btn-success btn-block" onclick="submit();">登录</button>
+                    <button class="btn btn-success btn-block" id="loginBtn">登录</button>
                 </form>
             </div>
         </div>
@@ -50,5 +50,34 @@
         </div>
     </div>
 </body>
+<#include "/comm/foot.ftl"/>
 
+<script>
+$(function(){
+	$("#loginBtn").click(function() {
+			$.ajax({
+            url: "${rc.contextPath}/admin/login.do",
+            data: $("#loginForm").serialize(),
+            type: "POST",
+            dataType: "json",
+            async: false,
+            success: function(result) {
+            	alert(result.code);
+                if (result.code == 1) {
+                    window.location.href="${rc.contextPath}/admin/index.do";
+                }else {
+                	$("#errorTip").html(result.message);
+                }
+            },
+            error: function() {
+                console.log("Call saveWarningFlag method occurs error");
+                $("#errorTip").html("网络连接异常，请稍后重试！");
+            }
+        });
+        return false;
+	});
+
+});
+
+</script>
 </html>
