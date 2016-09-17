@@ -1,5 +1,7 @@
 package com.demo.back.service.impl;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,29 @@ public class UserSeriviceImpl implements UserService{
 
 	@Override
 	public int saveUser(User user) {
+		Preconditions.checkArgument(user != null, "user is null.");
+
+		Date currentDate = new Date();
+		user.setCreateTime(currentDate);
+		user.setUpdateTime(currentDate);
 		return userMapper.save(user);
+	}
+
+	@Override
+	public int updateUserByUsername(User user) {
+		Preconditions.checkArgument(user != null, "user is null.");
+		Preconditions.checkArgument(StringUtil.isNotEmpty(user.getUsername()), "username is empty.");
+
+		return userMapper.updateByUsername(user);
+	}
+
+	@Override
+	public int updateUserSelectiveByUsername(User user) {
+		Preconditions.checkArgument(user != null, "user is null.");
+		Preconditions.checkArgument(StringUtil.isNotEmpty(user.getUsername()), "username is empty.");
+
+		user.setUpdateTime(new Date());
+		return userMapper.updateSelectiveByUsername(user);
 	}
 
 	@Override

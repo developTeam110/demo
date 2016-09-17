@@ -1,13 +1,17 @@
 package com.demo.common.util;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.demo.common.helper.CookieHelper;
 
 
 public class EncryptUtil {
 
-	private static final Log LOG = LogFactory.getLog(EncryptUtil.class);
+	private static final Logger logger = LoggerFactory.getLogger(EncryptUtil.class);
 
 	/**
 	 * 利用MD5进行加密
@@ -18,14 +22,6 @@ public class EncryptUtil {
 		}
 
 		return DigestUtils.md5Hex(str);
-	}
-
-	public static String encodeByMd5(String str, String key) {
-		if (str == null) {
-			return "";
-		}
-
-		return DigestUtils.md5Hex(str + key);
 	}
 
 	public static String EncodeByRC4(String aInput, String aKey) {
@@ -67,7 +63,39 @@ public class EncryptUtil {
 		}
 
 		return new String(iOutputChar);
+	}
 
+	/**
+	 * 对cookie的值编码
+	 * @param aInput cookie值
+	 * @param aKey 编码的字符串
+	 * @return
+	 */
+	public static String encodeCookieValue(String aInput, String aKey) {
+		String str = EncodeByRC4(aInput, aKey);
+		String base64Str = "";
+		try {
+			base64Str = Base64.encodeBase64String(ConvertUtil.getBytesFromObject(str));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return base64Str.replace("\r\n", "");
+	}
+
+	/**
+	 * 对cookie的值解码
+	 * @param base64Str cookie值
+	 * @param aKey 解码字符串
+	 * @return 解码后的值
+	 */
+	public static String decodeCookieValue(String base64Str, String aKey) {
+		String str = "";
+		try {
+			str = EncodeByRC4(ConvertUtil.getObjectFromBytes(Base64.decodeBase64(base64Str)).toString(), aKey);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return str;
 	}
 
 }

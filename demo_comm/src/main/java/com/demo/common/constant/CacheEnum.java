@@ -2,20 +2,18 @@ package com.demo.common.constant;
 
 import com.demo.common.constant.CommEnum.TIME_SECONDS;
 
-
-/** 
-* REVIEW
-* @Description: 缓存KEY公共枚举
-* @author jingkun.wang@baidao.com
-* @date 2016年7月2日 下午3:03:41
-* 
-*/
 public enum CacheEnum {
 
+	/* 用户相关缓存 KEY */
 	/**
 	 * 活跃用户缓存（结构：MAP，failed：username）
 	 */
-	USER_MAP_KEY_USERNAME("user:map:key:username:", TIME_SECONDS.ONE_DAY.sec());
+	USER_MAP_KEY_USERNAME("user:map:key:username:", TIME_SECONDS.ONE_DAY.sec()),
+
+	/**
+	 * 登录用户缓存（结构：MAP，failed：username）
+	 */
+	USER_LOGIN_MAP_KEY_USERNAME("user:login:map:key:username:", TIME_SECONDS.ONE_DAY.sec());
 
 	private String key;
 	private Integer seconds;

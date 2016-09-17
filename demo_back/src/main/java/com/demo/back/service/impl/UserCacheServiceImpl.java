@@ -23,7 +23,18 @@ public class UserCacheServiceImpl implements UserCacheService{
 
 	@Override
 	public User getUser(String username) {
-		return redisService.get(username, User.class);
+		return redisService.hget(CacheEnum.USER_MAP_KEY_USERNAME.key(), username, User.class);
+	}
+
+	@Override
+	public void saveLoginUser(User user) {
+		redisService.hset(CacheEnum.USER_LOGIN_MAP_KEY_USERNAME.key(), user.getUsername(), JsonUtil.Object2Json(user));
+		redisService.expire(CacheEnum.USER_LOGIN_MAP_KEY_USERNAME.key(), CacheEnum.USER_LOGIN_MAP_KEY_USERNAME.seconds());
+	}
+
+	@Override
+	public User getLoginUser(String username) {
+		return redisService.hget(CacheEnum.USER_LOGIN_MAP_KEY_USERNAME.key(), username, User.class);
 	}
 
 }

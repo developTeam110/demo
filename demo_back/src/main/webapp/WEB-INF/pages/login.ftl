@@ -5,7 +5,7 @@
 
     <title>登录</title>
     <#include "/comm/head_meta.ftl"/>
-    <link href="/demo_back/static/css/login.min.css" rel="stylesheet">
+    <link href="${rc.contextPath}/static/css/login.min.css" rel="stylesheet">
     <script>
         if(window.top!==window.self){window.top.location=window.location};
     </script>
@@ -35,7 +35,7 @@
             <div class="col-sm-5">
                 <form id="loginForm">
                     <h4 class="no-margins">登录：</h4>
-                    <p class="m-t-md" id="errorTip"></p>
+                    <p class="m-t-md" id="errorTip" style="color:red;"></p>
                     <input type="text" name="loginName" class="form-control uname" placeholder="用户名" />
                     <input type="password" name="password" class="form-control pword m-b" placeholder="密码" />
                     <a href="#">忘记密码了？</a>
@@ -62,7 +62,6 @@ $(function(){
             dataType: "json",
             async: false,
             success: function(result) {
-            	alert(result.code);
                 if (result.code == 1) {
                     window.location.href="${rc.contextPath}/admin/index.do";
                 }else {

@@ -57,7 +57,7 @@ public class User {
 	/**
 	 * 上一次登录IP地址
 	 */
-	private Date lastLoginIp;
+	private String lastLoginIp;
 
 	/**
 	 * 创建时间
@@ -203,11 +203,11 @@ public class User {
 		this.lastLoginTime = lastLoginTime;
 	}
 
-	public Date getLastLoginIp() {
+	public String getLastLoginIp() {
 		return lastLoginIp;
 	}
 
-	public void setLastLoginIp(Date lastLoginIp) {
+	public void setLastLoginIp(String lastLoginIp) {
 		this.lastLoginIp = lastLoginIp;
 	}
 
