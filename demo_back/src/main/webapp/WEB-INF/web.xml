@@ -25,10 +25,21 @@
     <listener-class>com.demo.common.spring.SuperContextLoaderListener</listener-class>
   </listener>
 
-  <!-- 加载主spring配置文件 -->
+  <!-- 定位spring配置文件 -->
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath*:applicationContext-back-beans.xml</param-value>
+  </context-param>
+
+  <!-- 注册系统初始化监听器 -->
+  <listener>
+    <listener-class>com.demo.common.listener.InitSystemListener</listener-class>
+  </listener>
+
+  <!-- 定位系统全局配置文件 -->
+  <context-param>
+    <param-name>initConfigLocation</param-name>
+    <param-value>const.properties</param-value>
   </context-param>
 
   <!-- 配置springmvc context -->
