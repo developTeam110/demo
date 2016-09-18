@@ -66,6 +66,11 @@ public class IndexController {
 			return result;
 		}
 
+		if (User.STATUS.FREEZE.code().equals(user.getStatus())) {
+			result.setErrorCode(ErrorCode.USER_IS_FREEZE);
+			return result;
+		}
+
 		user.setLastLoginTime(new Date());
 		user.setLastLoginIp(UserHelper.getIpAddr(request));
 		userService.updateUserByUsername(user);

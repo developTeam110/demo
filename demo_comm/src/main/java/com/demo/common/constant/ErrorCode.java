@@ -28,7 +28,8 @@ public enum ErrorCode {
 	/* 用户错误：20001-29999 */
 	USER_NOT_EXIST(20001, "用户不存在"),
 	USER_NOT_LOGIN(20002, "用户未登录"),
-	USER_IS_NOT_INNER(20003, "不是内部账户，无法登陆"),
+	USER_IS_NOT_INNER(20003, "不是内部账户"),
+	USER_IS_FREEZE(20004, "账户已被冻结"),
 
 	/* 业务错误：30001-39999 */
 

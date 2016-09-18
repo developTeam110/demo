@@ -2,12 +2,16 @@ package com.demo.common.helper;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.demo.back.po.User;
 import com.demo.common.constant.CookieConstant;
 import com.demo.common.util.EncryptUtil;
 import com.demo.common.util.StringUtil;
@@ -87,4 +91,37 @@ public class UserHelper {
 		return userName;
 	}
 
+	public static boolean havePermission(User user, String url) {
+		if (user == null) {
+			return false;
+		}
+
+		boolean isPermission = false;
+		try {
+			Long[] roleIds = user.getRoleIds();
+			if (ArrayUtils.isEmpty(roleIds)) {
+				commonRedisService.del(user.getUsername());
+				return false;//用户权限信息为空
+			}
+			loadAllRoleResources();
+			String result = Arrays.toString(roleIds).replaceAll(" +", "");
+			String[] roleIdsStrArray = result.substring(1, result.length() - 1).split(",");
+
+			List<String> resourceList = commonRedisService.hmget(CommonConstants.ROLE_RESOURCES_HASH_KEY, roleIdsStrArray);
+			int index = url.indexOf("?");
+			if (index > -1) {
+				url = url.substring(0, index);
+			}
+
+			for (String resource : resourceList) {
+				if (resource != null && resource.contains(url)) {
+					isPermission = true;
+					break;
+				}
+			}
+		} catch (TimeoutException e) {
+			logger.error("get user's resources from cache by roleId timeout", e);
+		}
+		return isPermission;
+	}
 }

@@ -117,7 +117,8 @@
             `login_string` = #{loginName} OR
             `email` = #{loginName} OR
             `phone` = #{loginName} AND
-            `password` = #{pwd}
+            `password` = #{pwd} AND
+            `status` != 3
         </where>
     </select>
 
