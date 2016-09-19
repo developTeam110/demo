@@ -97,8 +97,7 @@ public class UserHelper {
 		}
 
 		boolean isPermission = false;
-		try {
-			Long[] roleIds = user.getRoleIds();
+	/*		Long[] roleIds = user.getRoleIds();
 			if (ArrayUtils.isEmpty(roleIds)) {
 				commonRedisService.del(user.getUsername());
 				return false;//用户权限信息为空
@@ -118,10 +117,7 @@ public class UserHelper {
 					isPermission = true;
 					break;
 				}
-			}
-		} catch (TimeoutException e) {
-			logger.error("get user's resources from cache by roleId timeout", e);
-		}
+			}*/
 		return isPermission;
 	}
 }

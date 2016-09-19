@@ -37,7 +37,7 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "login", method = { RequestMethod.GET })
-	public String doGetlogin() {
+	public String doGetlogin(Model model) {
 		return "/login";
 	}
 
@@ -76,14 +76,14 @@ public class IndexController {
 		userService.updateUserByUsername(user);
 
 		CookieHelper.addLoginCookie(request, response, user);
-		userCacheService.saveLoginUser(user);;
+		userCacheService.saveLoginUser(user);
 
 		result.setErrorCode(ErrorCode.SUCCESS);
 		return result;
 	}
 
 	@RequestMapping(value = "logout", method = { RequestMethod.GET, RequestMethod.POST })
-	public String getTest(Model model, String username, String password) {
+	public String getTest(Model model, String username) {
 		User user = userService.getUserFromCacheOrDbByUsername(username);
 		System.out.println(user);
 		return "/login";

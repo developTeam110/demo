@@ -3,7 +3,7 @@
 
 <head>
     <title>后台管理</title>
-    <#include "/comm/head_meta.ftl"/>
+    <#include "/comm/head.ftl"/>
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">

@@ -1,6 +1,7 @@
 package com.demo.back.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import com.demo.back.po.User;
 import com.demo.back.service.UserCacheService;
 import com.demo.back.service.UserService;
 import com.demo.common.util.StringUtil;
+import com.demo.common.vo.Page;
 import com.google.common.base.Preconditions;
 
 @Service(value="userService")
@@ -72,6 +74,17 @@ public class UserSeriviceImpl implements UserService{
 			userCacheService.saveUser(user);
 		}
 		return user;
+	}
+
+	@Override
+	public Page<User> getPageByCondition(Page<User> page, User user) {
+		int count = userMapper.getCountByCondition(page, user);
+		page.setTotal(count);
+		if (count != 0) {
+			List<User> userList = userMapper.getListByCondition(page, user);
+			page.setRows(userList);
+		}
+		return page;
 	}
 
 }

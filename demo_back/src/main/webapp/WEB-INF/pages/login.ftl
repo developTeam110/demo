@@ -4,7 +4,7 @@
 <head>
 
     <title>登录</title>
-    <#include "/comm/head_meta.ftl"/>
+    <#include "/comm/head.ftl"/>
     <link href="${rc.contextPath}/static/css/login.min.css" rel="stylesheet">
     <script>
         if(window.top!==window.self){window.top.location=window.location};

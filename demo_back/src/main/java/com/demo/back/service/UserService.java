@@ -1,6 +1,7 @@
 package com.demo.back.service;
 
 import com.demo.back.po.User;
+import com.demo.common.vo.Page;
 
 public interface UserService {
 
@@ -16,4 +17,5 @@ public interface UserService {
 
 	User getUserFromCacheOrDbByUsername(String username);
 
+	Page<User> getPageByCondition(Page<User> page, User user);
 }

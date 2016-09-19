@@ -122,27 +122,27 @@
         </where>
     </select>
 
-    <select id="getPageList" parameterType="User" resultMap="UserResultMap">
+    <select id="getListByCondition" parameterType="User" resultMap="UserResultMap">
         SELECT * FROM `t_user`
         <where>
             1=1
             <include refid="Base_Query_Column_List" />
         </where>
 
-        <if test="pageInfo != null">
-            <if test="pageInfo.orderColumn!=null">
-                ORDER BY `${pageInfo.orderColumn[0]}` ${pageInfo.orderDesc[0]}
+        <if test="page != null">
+            <if test="page.sort != null and page.sort != ''">
+                ORDER BY `${page.sort}` ${page.order}
             </if>
-            <if test="pageInfo.orderColumn==null">
-                ORDER BY sort_value DESC, `create_time` DESC
+            <if test="page.sort == null or page.sort == ''">
+                ORDER BY `create_time` DESC
             </if>
 
-            LIMIT #{pageInfo.firstResult}, #{pageInfo.pageSize}
+            LIMIT #{page.offset}, #{page.limit}
         </if>
     </select>
 
-    <select id="getPageCount" parameterType="User" resultType="int">
-        SELECT count(id) FROM `t_user`
+    <select id="getCountByCondition" parameterType="User" resultType="int">
+        SELECT count(*) FROM `t_user`
         <where>
             1=1
             <include refid="Base_Query_Column_List" />
