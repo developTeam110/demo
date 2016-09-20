@@ -7,6 +7,8 @@ public class StringUtil {
 
 	private static final String passwordReg = "^\\w{6,16}$";//必须是6到16个英文字符、数字
 	private static final String loginNameReg = "^\\w{4,16}$";//4到16个英文字符、数字或下划线
+	private static final String emailReg = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+	private static final String phoneReg = "^((1[0,3,5,8][0-9])|(14[5,7])|(17[0,1,3,6,7,8]))\\d{8}$";
 
 	/**
 	 * 判断传入的字符串是否为空串
@@ -47,9 +49,33 @@ public class StringUtil {
 	}
 
 	/**
+	 * 是否为有效邮箱
+	 */
+	public static boolean isValidEmail(String email) {
+		if (email == null) {
+			return false;
+		}
+
+		Pattern pwdPattern = Pattern.compile(emailReg);
+		return pwdPattern.matcher(email).matches();
+	}
+
+	/**
+	 * 是否为有效邮箱
+	 */
+	public static boolean isValidPhone(String phone) {
+		if (phone == null) {
+			return false;
+		}
+
+		Pattern pwdPattern = Pattern.compile(phoneReg);
+		return pwdPattern.matcher(phone).matches();
+	}
+
+	/**
 	 * 通过UUID生成字符串（去掉字符 -）
 	 */
-	public static String getRandomStrByUUID() {
+	public static String generateRandomUsernameByUUID() {
 		return UUID.randomUUID().toString().replace("-", "");
 	}
 }

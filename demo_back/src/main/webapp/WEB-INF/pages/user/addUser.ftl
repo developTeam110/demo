@@ -93,7 +93,7 @@
 
                         <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-3">
-                                <button class="btn btn-primary" id="submitBtn">提交</button>
+                                <button class="btn btn-primary" type="button" id="submitBtn">提交</button>
                             </div>
                         </div>
                     </form>
@@ -108,24 +108,25 @@
     <script>
     $(document).ready(function(){
         $("#submitBtn").on("click", function(e) {
-                e.preventDefault();
-                e.stopPropagation();
+                //e.preventDefault();
+                //e.stopPropagation();
                 $.ajax({
-                    url: "${rc.contextPath}/admin/user/addUser.do",
+                    url: "${rc.contextPath}/admin/user/add.do",
                     data: $("#addUserForm").serialize(),
                     type: "POST",
                     dataType: "json",
                     async: false,
                     success: function(result) {
                         if (result.code == 1) {
-                            window.location.href="${rc.contextPath}/admin/index.do";
+                        	toastr.error(result.message)
+                            window.location.href="${rc.contextPath}/admin/toList.do";
                         }else {
-                            $("#errorTip").html(result.message);
+                        	toastr.error(result.message)
                         }
                     },
                     error: function() {
                         console.log("Call saveWarningFlag method occurs error");
-                        $("#errorTip").html("网络连接异常，请稍后重试！");
+                        toastr.error("网络连接异常，请稍后重试！")
                     }
             });
         });

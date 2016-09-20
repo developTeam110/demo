@@ -102,9 +102,4 @@ public class FilterUtil {
 		return url;
 	}
 
-
-	public static void main(String[] args) {
-		FilterUtil.checkDomain("top.baidao.com");
-	}
-
 }

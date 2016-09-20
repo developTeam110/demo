@@ -15,3 +15,5 @@
 <link href="${rc.contextPath}/static/css/animate.min.css" rel="stylesheet">
 <link href="${rc.contextPath}/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
 <link href="${rc.contextPath}/static/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="${rc.contextPath}/static/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+<link href="${rc.contextPath}/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">

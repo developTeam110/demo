@@ -1,11 +1,15 @@
 package com.demo.back.web;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,6 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.demo.back.po.User;
 import com.demo.back.service.UserCacheService;
 import com.demo.back.service.UserService;
+import com.demo.common.constant.ErrorCode;
+import com.demo.common.exception.BusinessException;
+import com.demo.common.helper.UserHelper;
 import com.demo.common.vo.Page;
 import com.demo.common.vo.Result;
 
@@ -27,8 +34,7 @@ public class UserController {
 	private UserCacheService userCacheService;
 
 	@RequestMapping(value = "toList", method = { RequestMethod.GET })
-	public Object toUserList(Model model) {
-		model.addAttribute("statuses", User.STATUS.values());
+	public String toUserList(Model model) {
 		return "/user/userList";
 	}
 
@@ -39,15 +45,51 @@ public class UserController {
 		return resultPage;
 	}
 
-	@RequestMapping(value = "toAddUser", method = { RequestMethod.GET })
+	@RequestMapping(value = "toAdd", method = { RequestMethod.GET })
 	public Object toAddUser(Model model) {
+		model.addAttribute("statuses", User.STATUS.values());
 		return "/user/addUser";
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "addUser", method = { RequestMethod.POST })
-	public Object addUser(Model model, User user) {
+	@RequestMapping(value = "add", method = { RequestMethod.POST })
+	public Object addUser(HttpServletRequest request, User user) {
 		Result result = new Result();
+
+		try {
+			user.setLastLoginIp(UserHelper.getIpAddr(request));
+			user.setLastLoginTime(new Date());
+			userService.saveUser(user);
+			result.setErrorCode(ErrorCode.SUCCESS);
+		} catch (BusinessException e) {
+			result.setErrorCode(e.getErrorCode());
+		}
+
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "delete", method = { RequestMethod.POST })
+	public Object deleteUserList(List<String> usernameList) {
+		Result result = new Result();
+		if (CollectionUtils.isEmpty(usernameList)) {
+			result.setErrorCode(ErrorCode.PARAM_NO_SELECTED_ITEM);
+			return result;
+		}
+
+		try {
+			for (String username : usernameList) {
+				User paramUser = new User();
+				paramUser.setUsername(username);
+				paramUser.setStatus(User.STATUS.DELETE.code());
+				userService.updateUserSelectiveByUsername(paramUser);
+				//TODO 删除缓存
+			}
+			result.setErrorCode(ErrorCode.SUCCESS);
+		} catch (BusinessException e) {
+			result.setErrorCode(e.getErrorCode());
+		}
+
 		return result;
 	}
 }

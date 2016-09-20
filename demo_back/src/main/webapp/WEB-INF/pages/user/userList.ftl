@@ -15,7 +15,7 @@
 		    <button type="button" class="btn btn-default" id="addBtn">
 		        <i class="glyphicon glyphicon-plus"></i>
 		    </button>
-		    <button type="button" class="btn btn-default">
+		    <button type="button" class="btn btn-default" id="deleteBtn">
 		        <i class="glyphicon glyphicon-trash"></i>
 		    </button>
 		</div>
@@ -28,7 +28,6 @@
 		       data-search="true"
 			   data-page-number: 1
     		   data-page-size: 4
-    		   data-page-list: [5, 10, 20]
     		   data-query-params="queryParams"
     		   data-url="${rc.contextPath}/admin/user/list.do"
 			   >
@@ -58,8 +57,25 @@
     <script>
         $(function(){
            $('#addBtn').on('click', function(){
-                window.location.href="${rc.contextPath}/admin/user/toAddUser.do";
+                window.location.href="${rc.contextPath}/admin/user/toAdd.do";
             });
+
+	        $("#deleteBtn").click(function() {
+	            //toastr.success("Without any options", "Simple notification!")
+	            //toastr.error("Hi, welcome to Inspinia. This is example of Toastr notification box.")
+
+	            swal({
+	                title: "您确定要删除这条信息吗",
+	                type: "warning",
+	                showCancelButton: true,
+	                confirmButtonColor: "#DD6B55",
+	                confirmButtonText: "删除",
+	                closeOnConfirm: false
+	            }, function() {
+	                swal("删除成功！", "您已经永久删除了这条信息。", "success")
+	            })
+
+	        });
         });
 
         function queryParams(params) {

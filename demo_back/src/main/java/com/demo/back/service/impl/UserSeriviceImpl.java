@@ -10,6 +10,9 @@ import com.demo.back.dao.UserMapper;
 import com.demo.back.po.User;
 import com.demo.back.service.UserCacheService;
 import com.demo.back.service.UserService;
+import com.demo.common.constant.ErrorCode;
+import com.demo.common.exception.BusinessException;
+import com.demo.common.helper.UserHelper;
 import com.demo.common.util.StringUtil;
 import com.demo.common.vo.Page;
 import com.google.common.base.Preconditions;
@@ -27,6 +30,69 @@ public class UserSeriviceImpl implements UserService{
 	public int saveUser(User user) {
 		Preconditions.checkArgument(user != null, "user is null.");
 
+		/*密码校验*/
+		String password = user.getPassword();
+		if (StringUtil.isEmpty(password)) {
+			throw new BusinessException(ErrorCode.PARAM_PASSWORD_NOT_EMPTY);
+		}
+
+		if (!StringUtil.isValidPassword(password)) {
+			throw new BusinessException(ErrorCode.PARAM_PASSWORD_INVALID);
+		}
+
+		/*昵称校验*/
+		String nickname = user.getNickname();
+		if (StringUtil.isEmpty(nickname)) {
+			throw new BusinessException(ErrorCode.PARAM_NICKNAME_NOT_EMPTY);
+		}
+
+		/*登录名校验*/
+		String loginString = user.getLoginString();
+		if (StringUtil.isNotEmpty(loginString)) {
+			if (!StringUtil.isValidLoginName(loginString)) {
+				throw new BusinessException(ErrorCode.PARAM_LOGIN_NAME_INVALID);
+			}
+
+			User paramUser = new User();
+			paramUser.setLoginString(loginString);
+			int count = userMapper.getCountByCondition(null, paramUser);
+			if (count > 0) {
+				throw new BusinessException(ErrorCode.PARAM_LOGIN_NAME_IS_EXISTED);
+			}
+		}
+
+		/*邮箱校验*/
+		String email = user.getEmail();
+		if (StringUtil.isNotEmpty(email)) {
+			if (!StringUtil.isValidEmail(loginString)) {
+				throw new BusinessException(ErrorCode.PARAM_EMAIL_INVALID);
+			}
+
+			User paramUser = new User();
+			paramUser.setEmail(email);
+			int count = userMapper.getCountByCondition(null, paramUser);
+			if (count > 0) {
+				throw new BusinessException(ErrorCode.PARAM_EMAIL_IS_EXISTED);
+			}
+		}
+
+		/*电话号校验*/
+		String phone = user.getPhone();
+		if (StringUtil.isNotEmpty(phone)) {
+			if (!StringUtil.isValidPhone(phone)) {
+				throw new BusinessException(ErrorCode.PARAM_EMAIL_INVALID);
+			}
+
+			User paramUser = new User();
+			paramUser.setPhone(phone);
+			int count = userMapper.getCountByCondition(null, paramUser);
+			if (count > 0) {
+				throw new BusinessException(ErrorCode.PARAM_PHONE_IS_EXISTED);
+			}
+		}
+
+		user.setUsername(StringUtil.generateRandomUsernameByUUID());
+		user.setInnerFlag(user.getInnerFlag() == null ? false : user.getInnerFlag());
 		Date currentDate = new Date();
 		user.setCreateTime(currentDate);
 		user.setUpdateTime(currentDate);

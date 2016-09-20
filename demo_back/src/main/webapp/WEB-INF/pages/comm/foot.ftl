@@ -15,3 +15,8 @@
 <script>
     $(document).ready(function(){$(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",})});
 </script>
+
+<script src="${rc.contextPath}/static/js/plugins/toastr/toastr.min.js"></script>
+<script src="${rc.contextPath}/static/js/plugins/sweetalert/sweetalert.min.js"></script>
+
+<script src="${rc.contextPath}/static/js/back/main.js"></script>
