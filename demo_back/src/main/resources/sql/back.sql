@@ -25,8 +25,10 @@ CREATE TABLE `t_user` (
 DROP TABLE IF EXISTS `t_role`;
 CREATE TABLE `t_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `name` varchar(50) NOT NULL COMMENT '角色名称',
-  `desc` varchar(100) DEFAULT NULL COMMENT '角色描述',
+  `code` varchar(64) NOT NULL COMMENT '角色编码',
+  `name` varchar(64) NOT NULL COMMENT '角色名称',
+  `desc` varchar(128) DEFAULT NULL COMMENT '角色描述',
+  `sort` int(11) DEFAULT 0 COMMENT '排序值',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
@@ -45,10 +47,13 @@ CREATE TABLE `t_user_role` (
 DROP TABLE IF EXISTS `t_resource`;
 CREATE TABLE `t_resource` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `code` varchar(64) NOT NULL COMMENT '角色编码',
+  `name` varchar(64) NOT NULL COMMENT '角色名称',
   `url` varchar(500) NOT NULL COMMENT 'URL资源',
   `desc` varchar(100) DEFAULT NULL COMMENT 'URL资源描述',
   `level` int(11) DEFAULT NULL COMMENT '级别',
   `parent_id` int(11) DEFAULT NULL COMMENT '父ID',
+  `sort` int(11) DEFAULT 0 COMMENT '排序值',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)

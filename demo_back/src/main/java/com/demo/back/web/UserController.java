@@ -14,6 +14,7 @@ import com.demo.back.po.User;
 import com.demo.back.service.UserCacheService;
 import com.demo.back.service.UserService;
 import com.demo.common.vo.Page;
+import com.demo.common.vo.Result;
 
 @Controller
 @RequestMapping("admin/user")
@@ -27,6 +28,7 @@ public class UserController {
 
 	@RequestMapping(value = "toList", method = { RequestMethod.GET })
 	public Object toUserList(Model model) {
+		model.addAttribute("statuses", User.STATUS.values());
 		return "/user/userList";
 	}
 
@@ -37,4 +39,15 @@ public class UserController {
 		return resultPage;
 	}
 
+	@RequestMapping(value = "toAddUser", method = { RequestMethod.GET })
+	public Object toAddUser(Model model) {
+		return "/user/addUser";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "addUser", method = { RequestMethod.POST })
+	public Object addUser(Model model, User user) {
+		Result result = new Result();
+		return result;
+	}
 }
