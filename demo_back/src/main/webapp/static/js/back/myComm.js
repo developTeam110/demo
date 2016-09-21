@@ -44,15 +44,18 @@ $(function () {
             var self = event.data.self;
             var $this = $(this);
 
+            
+            var selectedItems = self.$table.bootstrapTable('getRowByUniqueId', "555e364acb85404789b0959d46295767");
+console.log(selectedItems);return false;
             var selectedItems = self.$table.bootstrapTable('getSelections');
             self.deleteItems(selectedItems);
         },
 
         //批量删除or单条删除表中项方法
         deleteItems: function (selectedItems) {
-        	console.log(this.$table);
-        	var url = this.$table.attr("data-delete-url");
-
+        	console.log(selectedItems);
+        	return false;
+        	var url = this.DELETE_URL;
             if ($.isEmptyObject(selectedItems)) {
                 swal({title: "没有任何项被选中",text: "至少选择一项进行删除操作"})
                 return false;

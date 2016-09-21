@@ -44,6 +44,8 @@
                data-page-list = [10, 25, 50, 100, All]
                data-url="${rc.contextPath}/admin/user/list.do"
                data-delete-url="${rc.contextPath}/admin/user/delete.do"
+               data-unique-id="username"
+               data-id-field="username"
                >
             <thead>
 
@@ -109,7 +111,7 @@
             },
 
             'click .remove': function (e, value, row, index) {
-                window.myTable.deleteItems(new Array(row));
+                //window.myTable.deleteItems(new Array(row));
             }
         };
 
