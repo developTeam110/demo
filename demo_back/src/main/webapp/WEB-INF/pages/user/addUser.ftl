@@ -4,12 +4,22 @@
 <head>
 
     <title>添加用户</title>
-    <#include "/comm/head.ftl"/>
+    <#include "/comm/head_table.ftl"/>
 
 </head>
 
 <body class="gray-bg">
     <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="col-sm-12">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">2013</a></li>
+                <li class="active">十一月</li>
+            </ol>
+        </div>
+
+
         <div class="col-sm-2"></div>
         <div class="col-sm-8">
             <div class="ibox float-e-margins">
@@ -107,9 +117,7 @@
 
     <script>
     $(document).ready(function(){
-        $("#submitBtn").on("click", function(e) {
-                //e.preventDefault();
-                //e.stopPropagation();
+        $("#submitBtn").on("click", function() {
                 $.ajax({
                     url: "${rc.contextPath}/admin/user/add.do",
                     data: $("#addUserForm").serialize(),
@@ -119,7 +127,7 @@
                     success: function(result) {
                         if (result.code == 1) {
                         	toastr.error(result.message)
-                            window.location.href="${rc.contextPath}/admin/toList.do";
+                            window.location.href="${rc.contextPath}/admin/user/toList.do";
                         }else {
                         	toastr.error(result.message)
                         }

@@ -1,4 +1,4 @@
-//弹出框默认配置
+//提示框全局默认配置
 toastr.options = {
   "closeButton": true,
   "debug": false,

@@ -41,6 +41,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "list", method = { RequestMethod.GET })
 	public Object getUserList(HttpServletRequest request, HttpServletResponse response, Page<User> paramPage, User paramUser) {
+		paramUser.setStatus(User.STATUS.NORMAL.code());
 		Page<User> resultPage = userService.getPageByCondition(paramPage, paramUser);
 		return resultPage;
 	}
@@ -69,10 +70,10 @@ public class UserController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "delete", method = { RequestMethod.POST })
-	public Object deleteUserList(List<String> usernameList) {
+	@RequestMapping(value = "delete", method = {RequestMethod.GET, RequestMethod.POST })
+	public Object deleteUserList(String[] usernameList) {
 		Result result = new Result();
-		if (CollectionUtils.isEmpty(usernameList)) {
+		if (usernameList == null) {
 			result.setErrorCode(ErrorCode.PARAM_NO_SELECTED_ITEM);
 			return result;
 		}

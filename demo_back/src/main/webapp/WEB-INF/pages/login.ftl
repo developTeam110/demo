@@ -54,8 +54,8 @@
 
 <script>
 $(function(){
-	$("#loginBtn").on("click", function() {
-			$.ajax({
+    $("#loginBtn").on("click", function() {
+        $.ajax({
             url: "${rc.contextPath}/admin/login.do",
             data: $("#loginForm").serialize(),
             type: "POST",
@@ -65,7 +65,7 @@ $(function(){
                 if (result.code == 1) {
                     window.location.href="${rc.contextPath}/admin/index.do";
                 }else {
-                	$("#errorTip").html(result.message);
+                    $("#errorTip").html(result.message);
                 }
             },
             error: function() {
@@ -74,7 +74,7 @@ $(function(){
             }
         });
         return false;
-	});
+    });
 
 });
 
