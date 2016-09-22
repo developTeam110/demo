@@ -71,15 +71,15 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping(value = "delete", method = {RequestMethod.GET, RequestMethod.POST })
-	public Object deleteUserList(String[] usernameList) {
+	public Object deleteUserList(String[] uniqueIds) {
 		Result result = new Result();
-		if (usernameList == null) {
+		if (uniqueIds == null) {
 			result.setErrorCode(ErrorCode.PARAM_NO_SELECTED_ITEM);
 			return result;
 		}
 
 		try {
-			for (String username : usernameList) {
+			for (String username : uniqueIds) {
 				User paramUser = new User();
 				paramUser.setUsername(username);
 				paramUser.setStatus(User.STATUS.DELETE.code());

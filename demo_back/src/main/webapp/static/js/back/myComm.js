@@ -7,8 +7,28 @@ var $document = $(document);
 
 $(function () {
 
+	/**
+	 * 自定义公共方法
+	 */
+    window.my = {
+
+        //判断对象为空方法
+        isEmpty: function (obj) {
+            if (obj instanceof jQuery) { 
+                return obj.length == 0;
+            } else { 
+                var name;
+                for ( name in obj ) {
+                    return false;
+                }
+                return true;
+            }
+        },
+
+    };
+
     /**
-     * 全局变量 （为bootstrap-table定制）
+     * 全局table变量 （为bootstrap-table定制）
      */
     window.myTable = {
 
@@ -47,20 +67,16 @@ $(function () {
             var checkedBoxs = self.$table.find(".bs-checkbox>input[name='btSelectItem']:checked");
             var uniqueids = [];
             $.each(checkedBoxs, function(index, checkedBox){
-            	console.log(index, checkBox);
-            	uniqueids[index] = $(checkedBox).val();
+                uniqueids[index] = $(checkedBox).val();
             });
-            console.log(checkedBox);return false;
-            var selectedItems = self.$table.bootstrapTable('getSelections');
-            self.deleteItems(selectedItems);
+
+            self.deleteItems(uniqueids);
         },
 
         //批量删除or单条删除表中项方法
-        deleteItems: function (selectedItems) {
-        	console.log(selectedItems);
-        	return false;
-        	var url = this.DELETE_URL;
-            if ($.isEmptyObject(selectedItems)) {
+        deleteItems: function (uniqueids) {
+            var url = this.DELETE_URL;
+            if (my.isEmpty(uniqueids)) {
                 swal({title: "没有任何项被选中",text: "至少选择一项进行删除操作"})
                 return false;
             }
@@ -74,20 +90,14 @@ $(function () {
                 cancelButtonText: "取消",
                 closeOnConfirm: false
             }, function() {
-                $(".cancel").click();
-
-                var usernameList = [];
-                $.each(selectedItems, function(index, value) {
-                    usernameList[index] = value.username;
-                });
+                $(".sweet-alert .cancel").click();
 
                 $.ajax({
                     url: url,
-                    data: {"usernameList":usernameList},
+                    data: {"uniqueIds":uniqueids},
                     type: "POST",
                     traditional: true,
                     dataType: "json",
-                    async: false,
                     success: function(result) {
                         if (result.code == 1) {
                             $('button[name="refresh"]').click();

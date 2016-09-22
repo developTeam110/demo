@@ -111,7 +111,7 @@
             },
 
             'click .remove': function (e, value, row, index) {
-                //window.myTable.deleteItems(new Array(row));
+                window.myTable.deleteItems(new Array(row.username));
             }
         };
 
