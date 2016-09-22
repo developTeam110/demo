@@ -44,9 +44,13 @@ $(function () {
             var self = event.data.self;
             var $this = $(this);
 
-            
-            var selectedItems = self.$table.bootstrapTable('getRowByUniqueId', "555e364acb85404789b0959d46295767");
-console.log(selectedItems);return false;
+            var checkedBoxs = self.$table.find(".bs-checkbox>input[name='btSelectItem']:checked");
+            var uniqueids = [];
+            $.each(checkedBoxs, function(index, checkedBox){
+            	console.log(index, checkBox);
+            	uniqueids[index] = $(checkedBox).val();
+            });
+            console.log(checkedBox);return false;
             var selectedItems = self.$table.bootstrapTable('getSelections');
             self.deleteItems(selectedItems);
         },
