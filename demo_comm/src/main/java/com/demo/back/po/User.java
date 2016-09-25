@@ -1,8 +1,13 @@
 package com.demo.back.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+import com.demo.common.anno.Transient;
+
+public class User implements Serializable{
+
+	private static final long serialVersionUID = 6590442372651263418L;
 
 	/**
 	 * 用户名
@@ -68,6 +73,10 @@ public class User {
 	 * 更新时间
 	 */
 	private Date updateTime;
+
+	//条件用户名
+	@Transient
+	private String excludeUsername;
 
 	/**
 	 * 用户状态枚举
@@ -225,6 +234,14 @@ public class User {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public String getExcludeUsername() {
+		return excludeUsername;
+	}
+
+	public void setExcludeUsername(String excludeUsername) {
+		this.excludeUsername = excludeUsername;
 	}
 
 }

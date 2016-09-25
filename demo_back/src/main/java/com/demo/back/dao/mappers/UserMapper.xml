@@ -31,6 +31,7 @@
         <if test="user.lastLoginTime!=null"> AND `last_login_ip`=#{user.lastLoginTime}</if>
         <if test="user.createTime!=null"> AND `create_time`=#{user.createTime}</if>
         <if test="user.updateTime!=null"> AND `update_time`=#{user.updateTime}</if>
+        <if test="user.excludeUsername!=null"> AND `username`!=#{user.excludeUsername}</if>
     </sql>
 
     <insert id="save" parameterType="User">
@@ -77,9 +78,6 @@
             `head_image`=#{headImage},
             `inner_flag`=#{innerFlag},
             `status`=#{status},
-            `last_login_time`=#{lastLoginTime},
-            `last_login_ip`=#{lastLoginIp},
-            `create_time`=#{createTime},
             `update_time`=#{updateTime}
         </set>
         WHERE username = #{username}
@@ -97,7 +95,6 @@
             <if test="status != null">`status`=#{status},</if>
             <if test="lastLoginTime != null">`last_login_time`=#{lastLoginTime},</if>
             <if test="lastLoginIp != null">`last_login_ip`=#{lastLoginIp},</if>
-            <if test="createTime != null">`create_time`=#{createTime},</if>
             <if test="updateTime != null">`update_time`=#{updateTime},</if>
         </set>
         WHERE username = #{username}

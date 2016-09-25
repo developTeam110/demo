@@ -17,6 +17,10 @@ import com.demo.common.util.StringUtil;
 import com.demo.common.vo.Page;
 import com.google.common.base.Preconditions;
 
+/**
+ * @author Administrator
+ *
+ */
 @Service(value="userService")
 public class UserSeriviceImpl implements UserService{
 
@@ -29,6 +33,18 @@ public class UserSeriviceImpl implements UserService{
 	@Override
 	public int saveUser(User user) {
 		Preconditions.checkArgument(user != null, "user is null.");
+
+		this.checkUserParam(user);
+
+		user.setUsername(StringUtil.generateRandomUsernameByUUID());
+		user.setInnerFlag(user.getInnerFlag() == null ? false : user.getInnerFlag());
+		Date currentDate = new Date();
+		user.setCreateTime(currentDate);
+		user.setUpdateTime(currentDate);
+		return userMapper.save(user);
+	}
+
+	private void checkUserParam(User user) {
 
 		/*密码校验*/
 		String password = user.getPassword();
@@ -54,6 +70,7 @@ public class UserSeriviceImpl implements UserService{
 			}
 
 			User paramUser = new User();
+			paramUser.setExcludeUsername(user.getUsername());
 			paramUser.setLoginString(loginString);
 			int count = userMapper.getCountByCondition(null, paramUser);
 			if (count > 0) {
@@ -64,11 +81,12 @@ public class UserSeriviceImpl implements UserService{
 		/*邮箱校验*/
 		String email = user.getEmail();
 		if (StringUtil.isNotEmpty(email)) {
-			if (!StringUtil.isValidEmail(loginString)) {
+			if (!StringUtil.isValidEmail(email)) {
 				throw new BusinessException(ErrorCode.PARAM_EMAIL_INVALID);
 			}
 
 			User paramUser = new User();
+			paramUser.setExcludeUsername(user.getUsername());
 			paramUser.setEmail(email);
 			int count = userMapper.getCountByCondition(null, paramUser);
 			if (count > 0) {
@@ -84,6 +102,7 @@ public class UserSeriviceImpl implements UserService{
 			}
 
 			User paramUser = new User();
+			paramUser.setExcludeUsername(user.getUsername());
 			paramUser.setPhone(phone);
 			int count = userMapper.getCountByCondition(null, paramUser);
 			if (count > 0) {
@@ -91,12 +110,6 @@ public class UserSeriviceImpl implements UserService{
 			}
 		}
 
-		user.setUsername(StringUtil.generateRandomUsernameByUUID());
-		user.setInnerFlag(user.getInnerFlag() == null ? false : user.getInnerFlag());
-		Date currentDate = new Date();
-		user.setCreateTime(currentDate);
-		user.setUpdateTime(currentDate);
-		return userMapper.save(user);
 	}
 
 	@Override
@@ -104,8 +117,14 @@ public class UserSeriviceImpl implements UserService{
 		Preconditions.checkArgument(user != null, "user is null.");
 		Preconditions.checkArgument(StringUtil.isNotEmpty(user.getUsername()), "username is empty.");
 
+		this.checkUserParam(user);
+
+		user.setInnerFlag(user.getInnerFlag() == null ? false : user.getInnerFlag());
+		Date currentDate = new Date();
+		user.setUpdateTime(currentDate);
 		return userMapper.updateByUsername(user);
 	}
+
 
 	@Override
 	public int updateUserSelectiveByUsername(User user) {

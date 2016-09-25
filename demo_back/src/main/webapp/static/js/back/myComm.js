@@ -7,22 +7,52 @@ var $document = $(document);
 
 $(function () {
 
-	/**
-	 * 自定义公共方法
-	 */
+    /**
+     * 自定义公共方法
+     */
     window.my = {
 
         //判断对象为空方法
         isEmpty: function (obj) {
             if (obj instanceof jQuery) { 
                 return obj.length == 0;
-            } else { 
+            } else {
+            	if (obj == null || obj == 'undefined') {
+            		return true;
+            	} else {
+            		return false;
+            	}
+
                 var name;
-                for ( name in obj ) {
-                    return false;
+                for (name in obj ) {
+                    return true;
                 }
-                return true;
+                return false;
             }
+        },
+
+        //获取booelean对象的中文
+        getBooleanCn: function (obj) {
+            if (obj) {
+                return "是";
+            } else {
+                return "否";
+            }
+        },
+
+        TIME_FORMAT_COMPLETE: "YYYY-MM-DD HH:mm:ss",
+
+        //时间搓格式化的中文
+        timestampFormat: function (obj, format) {
+            if (this.isEmpty(obj)) {
+                return null;
+            }
+
+            if (this.isEmpty(format)) {
+                format = this.TIME_FORMAT_COMPLETE;
+            }
+
+            return moment(new Date(obj)).format(format);
         },
 
     };
@@ -32,21 +62,13 @@ $(function () {
      */
     window.myTable = {
 
-        //每页显示数量
-        PAGE_SIZE: 20,
-
-        //标签宽度
-        TAB_WIDTH: 35,
-        TAB_ACTIVE_WIDTH: 100,
-
-        //滚动最快最慢速度 毫秒
-        SLOWEST: 1000,
-
+        //删除表单项URL
         DELETE_URL: $("table").attr("data-delete-url"),
 
         //表对象
         $table: $("table"),
 
+        //工具栏
         $toolbar: $("#toolbar"),
 
         //初始化
@@ -114,6 +136,16 @@ $(function () {
             })
 
         },
+
+        //格式化列（将时间戳转化为某一种格式）
+        timestampTimeFormatter: function (value, row, index) {
+            return my.timestampFormat(value);
+        },
+
+        //将boolean对象格式化
+        booleanFormatter: function (value, row, index) {
+            return my.getBooleanCn(value);
+        }
 
     };
 

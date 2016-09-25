@@ -20,6 +20,7 @@ import com.demo.back.service.UserService;
 import com.demo.common.constant.ErrorCode;
 import com.demo.common.exception.BusinessException;
 import com.demo.common.helper.UserHelper;
+import com.demo.common.util.StringUtil;
 import com.demo.common.vo.Page;
 import com.demo.common.vo.Result;
 
@@ -33,21 +34,22 @@ public class UserController {
 	@Autowired
 	private UserCacheService userCacheService;
 
-	@RequestMapping(value = "toList", method = { RequestMethod.GET })
+	@RequestMapping(value = "toList", method = { RequestMethod.GET, RequestMethod.POST })
 	public String toUserList(Model model) {
+		model.addAttribute("statuses", User.STATUS.values());
 		return "/user/userList";
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "list", method = { RequestMethod.GET })
+	@RequestMapping(value = "list", method = { RequestMethod.GET, RequestMethod.POST })
 	public Object getUserList(HttpServletRequest request, HttpServletResponse response, Page<User> paramPage, User paramUser) {
 		paramUser.setStatus(User.STATUS.NORMAL.code());
 		Page<User> resultPage = userService.getPageByCondition(paramPage, paramUser);
 		return resultPage;
 	}
 
-	@RequestMapping(value = "toAdd", method = { RequestMethod.GET })
-	public Object toAddUser(Model model) {
+	@RequestMapping(value = "toAdd", method = { RequestMethod.GET, RequestMethod.POST })
+	public String toAddUser(Model model) {
 		model.addAttribute("statuses", User.STATUS.values());
 		return "/user/addUser";
 	}
@@ -61,6 +63,29 @@ public class UserController {
 			user.setLastLoginIp(UserHelper.getIpAddr(request));
 			user.setLastLoginTime(new Date());
 			userService.saveUser(user);
+			result.setErrorCode(ErrorCode.SUCCESS);
+		} catch (BusinessException e) {
+			result.setErrorCode(e.getErrorCode());
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "toEdit", method = { RequestMethod.GET, RequestMethod.POST })
+	public String toEditUser(Model model, String uniqueId) {
+		User user = userService.getUserByUsername(uniqueId);
+		model.addAttribute("user", user);
+		model.addAttribute("statuses", User.STATUS.values());
+		return "/user/editUser";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "edit", method = { RequestMethod.POST })
+	public Object editUser(HttpServletRequest request, User user) {
+		Result result = new Result();
+
+		try {
+			userService.updateUserByUsername(user);
 			result.setErrorCode(ErrorCode.SUCCESS);
 		} catch (BusinessException e) {
 			result.setErrorCode(e.getErrorCode());

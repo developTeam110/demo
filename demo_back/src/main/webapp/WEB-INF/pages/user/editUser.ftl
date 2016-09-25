@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>添加用户</title>
+    <title>编辑用户</title>
     <#include "/comm/head.ftl"/>
 
 </head>
@@ -14,24 +14,30 @@
         <div class="col-sm-12">
             <ol class="breadcrumb">
                 <li><a href="#">用户管理</a></li>
-                <li class="active">添加用户</li>
+                <li class="active">编辑用户</li>
             </ol>
         </div>
-
 
         <div class="col-sm-2"></div>
         <div class="col-sm-8">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>添加用户</h5>
+                    <h5>编辑用户</h5>
                 </div>
                 <div class="ibox-content">
-                    <form class="form-horizontal m-t" id="addUserForm" action="#">
+                    <form class="form-horizontal m-t" id="editUserForm" action="#">
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">用户名：</label>
+                            <div class="col-sm-8">
+                                <input name="username" class="form-control" type="text" value="${user.username}">
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">登录名：</label>
                             <div class="col-sm-8">
-                                <input name="loginString" class="form-control" type="text">
+                                <input name="loginString" class="form-control" type="text" value="${user.loginString}">
                                 <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>4到16个英文字符、数字或下划线</span>
                             </div>
                         </div>
@@ -39,35 +45,35 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">邮箱：</label>
                             <div class="col-sm-8">
-                                <input name="email" class="form-control" type="text">
+                                <input name="email" class="form-control" type="text" value="${user.email}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">电话号码：</label>
                             <div class="col-sm-8">
-                                <input name="phone" class="form-control" type="text">
+                                <input name="phone" class="form-control" type="text" value="${user.phone}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">用户昵称：</label>
                             <div class="col-sm-8">
-                                <input name="nickname" class="form-control" type="text">
+                                <input name="nickname" class="form-control" type="text" value="${user.nickname}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">头像：</label>
                             <div class="col-sm-8">
-                                <input name="headImage" class="form-control" type="text">
+                                <input name="headImage" class="form-control" type="text" value="${user.headImage}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">密码：</label>
                             <div class="col-sm-8">
-                                <input name="password" class="form-control" type="password">
+                                <input name="password" class="form-control" type="password" value="${user.password}">
                                 <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>必须是6到16个英文字符、数字</span>
                             </div>
                         </div>
@@ -75,7 +81,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">确认密码：</label>
                             <div class="col-sm-8">
-                                <input name="confirmPassword" class="form-control" type="password">
+                                <input name="confirmPassword" class="form-control" type="password" value="${user.password}">
                                 <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请再次输入您的密码</span>
                             </div>
                         </div>
@@ -85,7 +91,7 @@
                             <div class="col-sm-8">
                                 <select class="form-control m-b" name="status">
                                     <#list statuses as item>
-                                        <option value="${item.code()}">${item.cnName()}</option>
+                                        <option value="${item.code()}" <#if item.code() == user.status>checked="checked"</#if> >${item.cnName()}</option>
                                     </#list>
                                 </select>
                             </div>
@@ -95,7 +101,7 @@
                             <label class="col-sm-3 control-label">是否内部账号：</label>
                             <div class="col-sm-8">
                                 <div class="checkbox i-checks">
-                                    <label><input name="innerFlag" type="checkbox" value="true"></label>
+                                    <label><input name="innerFlag" type="checkbox" <#if user.innerFlag>value="true"</#if>></label>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +123,7 @@
     <script>
     $().ready(function(){//jquery init start
 
-        $("#addUserForm").validate({
+        $("#editUserForm").validate({
             rules: {
               loginString: {
                   required: true,
@@ -144,7 +150,7 @@
             submitHandler: function(form) {
                 var $form = $(form);
                 $.ajax({
-                    url: "${rc.contextPath}/admin/user/add.do",
+                    url: "${rc.contextPath}/admin/user/edit.do",
                     data: $form.serialize(),
                     type: "POST",
                     dataType: "json",
