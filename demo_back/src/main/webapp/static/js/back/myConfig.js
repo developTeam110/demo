@@ -18,7 +18,7 @@ toastr.options = {
 /* jquery 验证添加自定义方法*/
 jQuery.validator.addMethod("phone", function(value, element) { 
 	var length = value.length; 
-	var mobile = /^((1[0,3,5,8][0-9])|(14[5,7])|(17[0,1,3,6,7,8]))\\d{8}$/;
+	var mobile = /^((1[0,3,5,8][0-9])|(14[5,7])|(17[0,1,3,6,7,8]))\d{8}$/;
 	return this.optional(element) || (length == 11 && mobile.test(value)); 
 	}, "手机号码格式错误");
 

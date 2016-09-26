@@ -44,7 +44,6 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "list", method = { RequestMethod.GET, RequestMethod.POST })
 	public Object getUserList(HttpServletRequest request, HttpServletResponse response, Page<User> paramPage, User paramUser) {
-		paramUser.setStatus(User.STATUS.NORMAL.code());
 		Page<User> resultPage = userService.getPageByCondition(paramPage, paramUser);
 		return resultPage;
 	}

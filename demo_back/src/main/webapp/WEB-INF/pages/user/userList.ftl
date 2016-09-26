@@ -19,8 +19,11 @@
                 </ol>
         </div>
 
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10">
+
             <div id="toolbarSearch">
-                <form action="#" role="form">
                 <table>
                     <tr>
                         <td>
@@ -56,7 +59,6 @@
                         </td>
                         <td>
                             <select class="form-control" name="status">
-                                <option value >全部</option>
                                 <#list statuses as item>
                                     <option value="${item.code()}" >${item.cnName()}</option>
                                 </#list>
@@ -81,13 +83,7 @@
                         </td>
                     </tr>
                 </table>
-                </form>
             </div>
-
-        <div class="row">
-            <div class="col-sm-1"></div>
-            <div class="col-sm-10">
-
 
             <div id="toolbar" class="btn-group">
                 <button type="button" class="btn btn-default JS_add_btn">
@@ -98,7 +94,7 @@
                 </button>
             </div>
     
-            <table data-toggle="table"
+            <table data-toggle="table" id="table"
                    data-height="600"
                    data-toolbar="#toolbar"
                    data-pagination="true"
@@ -125,7 +121,7 @@
                     <th data-field="nickname">用户昵称</th>
                     <th data-field="headImage">头像</th>
                     <th data-field="innerFlag" data-formatter="myTable.booleanFormatter">内部账号</th>
-                    <th data-field="status" data-formatter="booleanFormatter">状态</th>
+                    <th data-field="status" data-formatter="statusFormatter">状态</th>
                     <th data-field="lastLoginTime" data-formatter="myTable.timestampTimeFormatter">登录时间</th>
                     <th data-field="lastLoginIp">登录IP地址</th>
                     <th data-field="action" data-formatter="actionFormatter" data-events="actionEvents">操作</th>
@@ -159,14 +155,12 @@
 
         function queryParams(params) {
             var $searchTable = $("#toolbarSearch table");
-            var $searchForm = $("#toolbarSearch form");
-            
-            console.log(params);
-            console.log($searchForm.serializeArray());
-            console.log($searchForm.serialize());
-        console.log($searchTable.find("input[name='username']"));
             params.username = $searchTable.find("input[name='username']").val();
-
+            params.loginString = $searchTable.find("input[name='loginString']").val();
+            params.email = $searchTable.find("input[name='email']").val();
+            params.phone = $searchTable.find("input[name='phone']").val();
+            params.status = $searchTable.find("select[name='status'] option:selected").val();
+            params.innerFlag = $searchTable.find("select[name='innerFlag'] option:selected").val();
             return params;
         }
 
@@ -183,9 +177,18 @@
         }
 
         function statusFormatter(value, row, index) {
-            return value;
+            var $searchTable = $("#toolbarSearch table");
+            var $statusOption = $searchTable.find("select[name='status'] option");
+            var text = "";
+            $.each($statusOption, function(index, item) {
+                var $option = $(item);
+                if (value == $option.val()) {
+                    text = $option.html();
+                    return false;
+                }
+            });
+            return text;
         }
-
         /* 显示列信息格式化方法 结束 */
 
         window.actionEvents = {

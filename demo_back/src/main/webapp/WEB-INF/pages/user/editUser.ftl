@@ -91,7 +91,7 @@
                             <div class="col-sm-8">
                                 <select class="form-control m-b" name="status">
                                     <#list statuses as item>
-                                        <option value="${item.code()}" <#if item.code() == user.status>checked="checked"</#if> >${item.cnName()}</option>
+                                        <option value="${item.code()}" <#if item.code() == user.status>selected="selected"</#if> >${item.cnName()}</option>
                                     </#list>
                                 </select>
                             </div>
@@ -101,7 +101,7 @@
                             <label class="col-sm-3 control-label">是否内部账号：</label>
                             <div class="col-sm-8">
                                 <div class="checkbox i-checks">
-                                    <label><input name="innerFlag" type="checkbox" <#if user.innerFlag>value="true"</#if>></label>
+                                    <label><input name="innerFlag" type="checkbox" <#if user.innerFlag>checked="checked" value="true"</#if>></label>
                                 </div>
                             </div>
                         </div>

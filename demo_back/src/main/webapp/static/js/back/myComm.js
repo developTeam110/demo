@@ -63,10 +63,10 @@ $(function () {
     window.myTable = {
 
         //删除表单项URL
-        DELETE_URL: $("table").attr("data-delete-url"),
+        DELETE_URL: $("#table").attr("data-delete-url"),
 
         //表对象
-        $table: $("table"),
+        $table: $("#table"),
 
         //工具栏
         $toolbar: $("#toolbar"),
@@ -98,6 +98,11 @@ $(function () {
         //批量删除or单条删除表中项方法
         deleteItems: function (uniqueids) {
             var url = this.DELETE_URL;
+            if (my.isEmpty(url)) {
+            	swal({title: "没有设置删除的URL",text: "请在table中设置data-delete-url项"})
+            	return false;
+            }
+
             if (my.isEmpty(uniqueids)) {
                 swal({title: "没有任何项被选中",text: "至少选择一项进行删除操作"})
                 return false;
@@ -145,7 +150,7 @@ $(function () {
         //将boolean对象格式化
         booleanFormatter: function (value, row, index) {
             return my.getBooleanCn(value);
-        }
+        },
 
     };
 
