@@ -20,7 +20,7 @@ public class User implements Serializable{
 	private String loginString;
 
 	/**
-	 * 邮件
+	 * 邮箱
 	 */
 	private String email;
 

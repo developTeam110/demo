@@ -19,45 +19,61 @@
                 </ol>
         </div>
 
-        <div class="row">
-            <div class="col-sm-1"></div>
-            <div class="col-sm-1">
-                <input class="form-control" type="text" placeholder="用户名搜索">
-            </div>
-            <div class="col-sm-1">
-                <select class="form-control" name="account">
-                    <option>选项 1</option>
-                    <option>选项 2</option>
-                    <option>选项 3</option>
-                    <option>选项 4</option>
-                </select>
-            </div>
-            <div class="col-sm-1">
-                <button type="button" class="btn btn-default JS_search_btn ">
-                    <i class="glyphicon glyphicon-search"></i>
-                </button>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-sm-1"></div>
-            <div class="col-sm-10">
-    
             <div id="toolbarSearch">
+                <form action="#" role="form">
                 <table>
                     <tr>
                         <td>
-                            <input class="form-control" type="text" placeholder="用户名搜索">
+                            <label>用户名：</label>
                         </td>
                         <td>
-                            <select class="form-control" name="account">
-                                <option>选项 1</option>
-                                <option>选项 2</option>
-                                <option>选项 3</option>
-                                <option>选项 4</option>
+                            <input class="form-control" name="username" type="text">
+                        </td>
+
+                        <td>
+                            <label>登录名：</label>
+                        </td>
+                        <td>
+                            <input class="form-control" name="loginString" type="text">
+                        </td>
+
+                        <td>
+                            <label>邮箱：</label>
+                        </td>
+                        <td>
+                            <input class="form-control" name="email" type="text">
+                        </td>
+
+                        <td>
+                            <label>手机号：</label>
+                        </td>
+                        <td>
+                            <input class="form-control" name="phone" type="text">
+                        </td>
+
+                        <td>
+                            <label>用户状态：</label>
+                        </td>
+                        <td>
+                            <select class="form-control" name="status">
+                                <option value >全部</option>
+                                <#list statuses as item>
+                                    <option value="${item.code()}" >${item.cnName()}</option>
+                                </#list>
                             </select>
                         </td>
+
+                        <td>
+                            <label>是否内部账号：</label>
+                        </td>
+                        <td>
+                            <select class="form-control" name="innerFlag">
+                                <option value >全部</option>
+                                <option value="true" >是</option>
+                                <option value="false" >否</option>
+                            </select>
+                        </td>
+
                         <td>
                             <button type="button" class="btn btn-default JS_search_btn ">
                                 <i class="glyphicon glyphicon-search"></i>
@@ -65,8 +81,14 @@
                         </td>
                     </tr>
                 </table>
+                </form>
             </div>
-    
+
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10">
+
+
             <div id="toolbar" class="btn-group">
                 <button type="button" class="btn btn-default JS_add_btn">
                     <i class="glyphicon glyphicon-plus"></i>
@@ -129,9 +151,22 @@
                 window.location.href="${rc.contextPath}/admin/user/toAdd.do";
             });
 
+           $('#toolbarSearch .JS_search_btn').on('click', function(){
+                $('button[name="refresh"]').click();
+            });
+
         });
 
         function queryParams(params) {
+            var $searchTable = $("#toolbarSearch table");
+            var $searchForm = $("#toolbarSearch form");
+            
+            console.log(params);
+            console.log($searchForm.serializeArray());
+            console.log($searchForm.serialize());
+        console.log($searchTable.find("input[name='username']"));
+            params.username = $searchTable.find("input[name='username']").val();
+
             return params;
         }
 
