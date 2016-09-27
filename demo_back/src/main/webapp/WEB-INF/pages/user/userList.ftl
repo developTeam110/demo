@@ -104,7 +104,7 @@
                    data-show-toggle = true
                    data-show-columns = true
                    data-striped = true
-                   data-page-list = [10, 25, 50, 100, All]
+                   data-page-list = "[10, 20, 50, 100]"
                    data-url="${rc.contextPath}/admin/user/list.do"
                    data-delete-url="${rc.contextPath}/admin/user/delete.do"
                    data-unique-id="username"
