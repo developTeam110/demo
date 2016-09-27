@@ -9,8 +9,6 @@ import com.demo.common.constant.ErrorCode;
 public class Result implements Serializable {
 
 	private static final long serialVersionUID = 2284484847624556651L;
-	public static final String SUCCESS = "success";
-	public static final String ERROR = "error";
 
 	/**
 	 * 返回的状态码
@@ -62,10 +60,6 @@ public class Result implements Serializable {
 
 	public void setMessage(String message) {
 		this.message = message;
-	}
-
-	public boolean isSuccess() {
-		return SUCCESS.equalsIgnoreCase(code);
 	}
 
 	public Object getData() {

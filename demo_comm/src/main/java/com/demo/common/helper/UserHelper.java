@@ -2,9 +2,6 @@ package com.demo.common.helper;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeoutException;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -13,7 +13,7 @@ public enum CacheEnum {
 	/**
 	 * 登录用户缓存（结构：MAP，failed：username）
 	 */
-	USER_LOGIN_MAP_KEY_USERNAME("user:login:map:key:username:", TIME_SECONDS.ONE_DAY.sec());
+	USER_LOGIN_MAP_KEY_USERNAME(null, TIME_SECONDS.ONE_DAY.sec());
 
 	private String key;
 	private Integer seconds;

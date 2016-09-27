@@ -28,10 +28,6 @@ import com.demo.common.util.StringUtil;
 public class SecurityFilter implements Filter {
 	private final static Logger logger = LoggerFactory.getLogger(InitSystemListener.class);
 
-	private String loginUrl = "";
-	private String yuyinLoginUrl = "";
-	private String jryLoginUrl = "";
-	private String ipadLoginUrl = "";
 	private String trustUrlPatterns = null;
 
 	private List<String> trustUrls;
@@ -48,12 +44,18 @@ public class SecurityFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+		HttpServletRequest httpRequest = (HttpServletRequest) req;
+		HttpServletResponse httpResponse = (HttpServletResponse) res;
+
 		final String url = FilterUtil.getRequestedUrl(req);
 
 		boolean isNeedLogin = false;
 		boolean havePermission = false;
 
-		String username = UserHelper.getLoginedUsername((HttpServletRequest) req);
+		String username = UserHelper.getLoginedUsername(httpRequest);
+		if (StringUtil.isEmpty(username)) {
+			
+		}
 
 		User loginUser = null;
 		// 判断用户所请求的URL 是否需要保护。
