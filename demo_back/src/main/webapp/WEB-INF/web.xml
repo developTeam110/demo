@@ -20,6 +20,24 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+  <!-- 权限过滤器 -->
+  <filter>
+    <filter-name>SecurityFilter</filter-name>
+    <filter-class>com.demo.common.filter.SecurityFilter</filter-class>
+    <init-param>
+      <param-name>trustUrlPattern</param-name>
+      <param-value>
+         /rmt/*
+         /*/rmt/*
+         /captcha.do
+      </param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>SecurityFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+
   <!-- 初始化Spring context和SpringBeanProxy -->
   <listener>
     <description>Used to initialize Spring context and set SpringBeanProxy.</description>

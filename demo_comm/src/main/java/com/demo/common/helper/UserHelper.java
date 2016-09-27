@@ -7,8 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.demo.back.po.User;
+import com.demo.back.service.UserCacheService;
 import com.demo.common.constant.CookieConstant;
 import com.demo.common.util.EncryptUtil;
 import com.demo.common.util.StringUtil;
@@ -16,6 +18,13 @@ import com.demo.common.util.StringUtil;
 public class UserHelper {
 
 	private static final Logger logger = LoggerFactory.getLogger(CookieHelper.class);
+
+	@Autowired
+	private static UserCacheService userCacheService;
+
+	public void setUserCacheService(UserCacheService userCacheService) {
+		UserHelper.userCacheService = userCacheService;
+	}
 
 	/**
 	 * 获取用户的Ip地址
@@ -116,5 +125,17 @@ public class UserHelper {
 				}
 			}*/
 		return isPermission;
+	}
+
+	/**
+	 * 获取登录用户的用户名
+	 * @param request 请求对象
+	 * @return 用户名
+	 */
+	public static User getLoginedUserByUsername(String username) {
+		if (StringUtil.isEmpty(username)) {
+			return null;
+		}
+		return userCacheService.getLoginUser(username);
 	}
 }

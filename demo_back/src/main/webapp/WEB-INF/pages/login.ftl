@@ -55,6 +55,8 @@
 <script>
 $(function(){
     $("#loginBtn").on("click", function() {
+        $("#errorTip").html("");
+
         $.ajax({
             url: "${rc.contextPath}/admin/login.do",
             data: $("#loginForm").serialize(),
