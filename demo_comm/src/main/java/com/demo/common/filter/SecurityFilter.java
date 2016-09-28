@@ -20,6 +20,7 @@ import com.demo.common.util.FilterUtil;
 import com.demo.common.util.StringUtil;
 
 public class SecurityFilter implements Filter {
+	private static final String LOGIN_URL = "/admin/login.do";
 	private String trustUrlPatterns = null;
 	private List<String> trustUrls;
 	private ServletContext servletContext;
@@ -89,13 +90,12 @@ public class SecurityFilter implements Filter {
 		final String contextPath = httpRequest.getContextPath();
 		String returnUrl = httpRequest.getRequestURL().toString();
 
-		String loginUrl = "/demo_back/admin/login.do";
 		if (StringUtil.isNotEmpty(queryString)) {
 			returnUrl += "?" + queryString;
 		}
 
 		returnUrl = URLEncoder.encode(returnUrl, "UTF-8");
-		httpResponse.sendRedirect(loginUrl + "?returnUrl=" + returnUrl);
+		httpResponse.sendRedirect(contextPath + LOGIN_URL + "?returnUrl=" + returnUrl);
 	}
 
 	@Override
