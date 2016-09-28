@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.demo.back.po.User;
 import com.demo.common.constant.CommEnum;
 import com.demo.common.constant.CookieConstant;
+import com.demo.common.constant.SecretKeyConstant;
 import com.demo.common.util.EncryptUtil;
 
 public class CookieHelper {
@@ -37,11 +38,9 @@ public class CookieHelper {
 
 	/**
 	 * 获取登录的cookie值
-	 * @param request 请求对象
-	 * @return 登录cookie值
 	 */
-	public static String getLoginCookieValue(HttpServletRequest request) {
-		Cookie cookie = CookieHelper.getCookie(request, CookieConstant.LOGIN_COOKIE);
+	public static String getCookieValue(HttpServletRequest request, String cookieName) {
+		Cookie cookie = CookieHelper.getCookie(request, cookieName);
 		if (cookie != null) {
 			return cookie.getValue();
 		}
@@ -58,8 +57,8 @@ public class CookieHelper {
 		response.setHeader("P3P", "CP=CAO PSA OUR");
 		response.setDateHeader("Expires", 0);
 
-		final String cookieValue = EncryptUtil.encodeCookieValue(user.getUsername(), CookieConstant.COOKIE_KEY);
-		Cookie loginCookie = new Cookie(CookieConstant.COOKIE_USERNAME, cookieValue);
+		final String cookieValue = EncryptUtil.encodeCookieValue(user.getUsername(), SecretKeyConstant.TOKEN_SECRET_KEY);
+		Cookie loginCookie = new Cookie(CookieConstant.COOKIE_TOKEN, cookieValue);
 		//loginCookie.setDomain(cookiceDomain);// 替换cookie域名
 		loginCookie.setPath(CookieConstant.COOKIE_PATH);
 		loginCookie.setMaxAge(CommEnum.TIME_SECONDS.ONE_WEEK.sec());
@@ -73,7 +72,7 @@ public class CookieHelper {
 	public static void delLoginCookie(HttpServletRequest request, HttpServletResponse response) {
 		//String cookiceDomain = FilterUtil.checkDomain(request.getServerName());//COOKIE_DOMAIN
 
-		Cookie slCookie = new Cookie(CookieConstant.COOKIE_USERNAME, null);
+		Cookie slCookie = new Cookie(CookieConstant.COOKIE_TOKEN, null);
 		slCookie.setMaxAge(0);
 		//slCookie.setDomain(cookiceDomain);//替换cookie域名
 		slCookie.setPath(CookieConstant.COOKIE_PATH);

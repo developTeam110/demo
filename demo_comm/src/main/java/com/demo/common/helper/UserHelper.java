@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.demo.back.po.User;
 import com.demo.back.service.UserCacheService;
 import com.demo.common.constant.CookieConstant;
+import com.demo.common.constant.SecretKeyConstant;
 import com.demo.common.util.EncryptUtil;
 import com.demo.common.util.StringUtil;
 
@@ -49,9 +50,9 @@ public class UserHelper {
 	 * @return 用户名
 	 */
 	public static String getLoginedUsername(HttpServletRequest request) {
-		String username = CookieHelper.getLoginCookieValue(request);
-		if (StringUtil.isNotEmpty(username)) {
-			return username;
+		String token = CookieHelper.getCookieValue(request, CookieConstant.COOKIE_TOKEN);
+		if (StringUtil.isNotEmpty(token)) {
+			return tokenToUsername(token);
 		}
 
 		return getLoginedUsernameByToken(request.getParameter("token"));
@@ -75,26 +76,26 @@ public class UserHelper {
 			logger.error("getLoginedUserByToken decode encodedUsername error!", e1);
 		}
 
-		String userName = null;
+		String username = null;
 		//先根据urlEncodedUsername解
 		try {
-			userName = EncryptUtil.decodeCookieValue(urlEncodedUsername, CookieConstant.COOKIE_KEY);
-			logger.info("decode username is [{}]", userName);
+			username = tokenToUsername(token);
+			logger.info("decode username is [{}]", username);
 		} catch (Exception e1) {
 			logger.error("getLoginedUser encounter an decode cookie exception : ", e1);
 		}
 
 		//根据encodedUsername解
-		if (StringUtil.isEmpty(userName)) {
+		if (StringUtil.isEmpty(username)) {
 			try {
-				userName = EncryptUtil.decodeCookieValue(token, CookieConstant.COOKIE_KEY);
+				username = tokenToUsername(token);
 
 			} catch (Exception e1) {
 				logger.error("getLoginedUser encounter an decode cookie exception : ", e1);
 			}
 		}
 
-		return userName;
+		return username;
 	}
 
 	public static boolean havePermission(User user, String url) {
@@ -102,7 +103,7 @@ public class UserHelper {
 			return false;
 		}
 
-		boolean isPermission = false;
+		boolean isPermission = true;
 	/*		Long[] roleIds = user.getRoleIds();
 			if (ArrayUtils.isEmpty(roleIds)) {
 				commonRedisService.del(user.getUsername());
@@ -138,4 +139,27 @@ public class UserHelper {
 		}
 		return userCacheService.getLoginUser(username);
 	}
+
+	/**
+	 * token转化用户名
+	 */
+	public static String tokenToUsername(String token) {
+		if (StringUtil.isEmpty(token)) {
+			return null;
+		}
+
+		return EncryptUtil.decodeCookieValue(token, SecretKeyConstant.TOKEN_SECRET_KEY);
+	}
+
+	/**
+	 * 用户名转化token
+	 */
+	public static String usernameToToken(String username) {
+		if (StringUtil.isEmpty(username)) {
+			return null;
+		}
+
+		return EncryptUtil.encodeCookieValue(username, SecretKeyConstant.TOKEN_SECRET_KEY);
+	}
+
 }

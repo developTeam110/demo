@@ -2,7 +2,6 @@ package com.demo.common.filter;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.Filter;
@@ -15,14 +14,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.demo.back.po.User;
 import com.demo.common.helper.UserHelper;
-import com.demo.common.listener.InitSystemListener;
 import com.demo.common.util.FilterUtil;
-import com.demo.common.util.PropertiesUtil;
 import com.demo.common.util.StringUtil;
 
 public class SecurityFilter implements Filter {
@@ -45,8 +39,8 @@ public class SecurityFilter implements Filter {
 
 		String username = UserHelper.getLoginedUsername(httpRequest);
 		if (StringUtil.isEmpty(username)) {
-			//TODO 跳转登录页
 			this.redirectToLogin(httpRequest, httpResponse);
+			return;
 		}
 
 		User loginUser = UserHelper.getLoginedUserByUsername(username);
@@ -82,7 +76,7 @@ public class SecurityFilter implements Filter {
 
 		//TODO 是否是不受保护资源
 
-		return false;
+		return true;
 	}
 
 	/**
@@ -92,6 +86,7 @@ public class SecurityFilter implements Filter {
 		final String queryString = httpRequest.getQueryString();
 		final String referer = httpRequest.getHeader("referer");
 		final String serverName = httpRequest.getServerName();
+		final String contextPath = httpRequest.getContextPath();
 		String returnUrl = httpRequest.getRequestURL().toString();
 
 		String loginUrl = "/demo_back/admin/login.do";
