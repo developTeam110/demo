@@ -1,5 +1,9 @@
 package com.demo.common.helper;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +16,7 @@ import com.demo.common.constant.CommEnum;
 import com.demo.common.constant.CookieConstant;
 import com.demo.common.constant.SecretKeyConstant;
 import com.demo.common.util.EncryptUtil;
+import com.demo.common.util.StringUtil;
 
 public class CookieHelper {
 
@@ -50,20 +55,72 @@ public class CookieHelper {
 	/**
 	 * 添加用户COOKICE
 	 */
-	public static String addLoginCookie(HttpServletRequest request, HttpServletResponse response, User user) {
+	public static void addUserCookie(HttpServletRequest request, HttpServletResponse response, User user) {
 		// 设置页面不缓存
 		response.setHeader("Pragma", "No-cache");
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("P3P", "CP=CAO PSA OUR");
 		response.setDateHeader("Expires", 0);
 
-		final String cookieValue = EncryptUtil.encodeCookieValue(user.getUsername(), SecretKeyConstant.TOKEN_SECRET_KEY);
-		Cookie loginCookie = new Cookie(CookieConstant.COOKIE_TOKEN, cookieValue);
-		//loginCookie.setDomain(cookiceDomain);// 替换cookie域名
-		loginCookie.setPath(CookieConstant.COOKIE_PATH);
-		loginCookie.setMaxAge(CommEnum.TIME_SECONDS.ONE_WEEK.sec());
-		response.addCookie(loginCookie);
-		return cookieValue;
+		//保存token信息
+		String tokenCookieValue = EncryptUtil.encodeCookieValue(user.getUsername(), SecretKeyConstant.COOKIE_SECRET_KEY);
+		Cookie tokenCookie = new Cookie(CookieConstant.COOKIE_TOKEN, tokenCookieValue);
+		//tokenCookie.setDomain(cookiceDomain);// 替换cookie域名
+		tokenCookie.setPath(CookieConstant.COOKIE_PATH);
+		tokenCookie.setMaxAge(CommEnum.TIME_SECONDS.ONE_WEEK.sec());
+		response.addCookie(tokenCookie);
+
+		//保存昵称信息
+		String nicknameCookieValue = EncryptUtil.encodeURL(user.getNickname());
+		if (StringUtil.isNotEmpty(nicknameCookieValue)) {
+			Cookie nicknameCookie = new Cookie(CookieConstant.COOKIE_NICKNAME, nicknameCookieValue);
+			//nicknameCookie.setDomain(cookiceDomain);// 替换cookie域名
+			nicknameCookie.setPath(CookieConstant.COOKIE_PATH);
+			response.addCookie(nicknameCookie);
+		}
+
+		//保存头像信息
+		if (StringUtil.isNotEmpty(user.getHeadImage())) {
+			String headImageCookieValue = EncryptUtil.encodeURL(user.getHeadImage());
+			Cookie headImageCookie = new Cookie(CookieConstant.COOKIE_HEAD_IMAGE, headImageCookieValue);
+			//headImageCookie.setDomain(cookiceDomain);// 替换cookie域名
+			headImageCookie.setPath(CookieConstant.COOKIE_PATH);
+			response.addCookie(headImageCookie);
+		}
+	}
+
+	/**
+	 * 获取用户登录COOKICE
+	 */
+	public static User getUserCookie(HttpServletRequest request) {
+		if (request == null) {
+			return null;
+		}
+
+		User user = new User();
+
+		//用户名
+		String token = getCookieValue(request, CookieConstant.COOKIE_TOKEN);
+		if (StringUtil.isNotEmpty(token)) {
+			String username = UserHelper.tokenToUsername(token);
+			user.setUsername(username);
+		}
+
+		//昵称信息
+		String encrNickname = getCookieValue(request, CookieConstant.COOKIE_NICKNAME);
+		if (StringUtil.isNotEmpty(encrNickname)) {
+			String nickname = EncryptUtil.decodeURL(encrNickname);
+			user.setNickname(nickname);
+		}
+
+		//头像信息
+		String encrheadImage = getCookieValue(request, CookieConstant.COOKIE_HEAD_IMAGE);
+		if (StringUtil.isNotEmpty(encrheadImage)) {
+			String headImage = EncryptUtil.decodeURL(encrheadImage);
+			user.setHeadImage(headImage);
+		}
+
+		return user;
 	}
 
 	/**
@@ -72,11 +129,23 @@ public class CookieHelper {
 	public static void delLoginCookie(HttpServletRequest request, HttpServletResponse response) {
 		//String cookiceDomain = FilterUtil.checkDomain(request.getServerName());//COOKIE_DOMAIN
 
-		Cookie slCookie = new Cookie(CookieConstant.COOKIE_TOKEN, null);
-		slCookie.setMaxAge(0);
+		Cookie tokenCookie = new Cookie(CookieConstant.COOKIE_TOKEN, null);
+		tokenCookie.setMaxAge(0);
 		//slCookie.setDomain(cookiceDomain);//替换cookie域名
-		slCookie.setPath(CookieConstant.COOKIE_PATH);
-		response.addCookie(slCookie);
+		tokenCookie.setPath(CookieConstant.COOKIE_PATH);
+		response.addCookie(tokenCookie);
+
+		Cookie nicknameCookie = new Cookie(CookieConstant.COOKIE_NICKNAME, null);
+		nicknameCookie.setMaxAge(0);
+		//slCookie.setDomain(cookiceDomain);//替换cookie域名
+		nicknameCookie.setPath(CookieConstant.COOKIE_PATH);
+		response.addCookie(nicknameCookie);
+
+		Cookie headImageCookie = new Cookie(CookieConstant.COOKIE_HEAD_IMAGE, null);
+		headImageCookie.setMaxAge(0);
+		//slCookie.setDomain(cookiceDomain);//替换cookie域名
+		headImageCookie.setPath(CookieConstant.COOKIE_PATH);
+		response.addCookie(headImageCookie);
 	}
 
 }

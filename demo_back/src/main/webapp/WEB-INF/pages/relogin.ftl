@@ -1,64 +1,50 @@
 <!DOCTYPE html>
 <html>
 
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/lockscreen.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:52 GMT -->
 <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-    <title>后台登录</title>
+    <title>登录超时</title>
     <#include "/comm/head.ftl"/>
-
-    <!--[if lt IE 9]>
-    <meta http-equiv="refresh" content="0;ie.html" />
-    <![endif]-->
     <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+
 </head>
 
 <body class="gray-bg">
 
-    <div class="middle-box text-center loginscreen  animated fadeInDown">
+    <div class="lock-word animated fadeInDown">
+    </div>
+    <div class="middle-box text-center lockscreen animated fadeInDown">
         <div>
-            <div>
-
-                <h1 class="logo-name" style="font-size: 90px;">BACK</h1>
-
+            <div class="m-b-md">
+                <img alt="image" class="img-circle circle-border" src="${user.headImage}">
             </div>
-            <h3>欢迎使用</h3>
+            <h3>${user.nickname}</h3>
+            <p>您的登录已过期，需重新登录</p>
 
             <input type="hidden" name="backUrl" placeholder="返回跳转URL" value="${backUrl}" />
-
-            <form class="m-t" role="form" action="#" id="loginForm">
+            <form class="m-t" role="form" action="#" id="reloginForm">
                 <p class="m-t-md" id="errorTip" style="color:red;"></p>
-
                 <div class="form-group">
-                    <input type="text" name="loginName" class="form-control" placeholder="用户名">
+                    <input type="hidden" name="loginName" class="form-control" value="${user.username}"/>
+                    <input type="password" name="password" class="form-control" placeholder="请输入密码" required="">
                 </div>
-                <div class="form-group">
-                    <input type="password" name="password" class="form-control" placeholder="密码">
-                </div>
-                <button id="loginBtn" class="btn btn-primary block full-width m-b">登 录</button>
-
-                <p class="text-muted text-center"> <a href="login.html#"><small>忘记密码了？</small></a> | <a href="register.html">注册一个新账号</a>
-                </p>
-
+                <button class="btn btn-primary block full-width" id="reloginBtn">重新登录</button>
             </form>
         </div>
     </div>
 
+    <#include "/comm/foot.ftl"/>
 </body>
-
-<#include "/comm/foot.ftl"/>
 
 <script>
 $(function(){
-    $("#loginBtn").on("click", function() {
+    $("#reloginBtn").on("click", function() {
         $("#errorTip").html("");
 
         $.ajax({
             url: "${rc.contextPath}/admin/login.do",
-            data: $("#loginForm").serialize(),
+            data: $("#reloginForm").serialize(),
             type: "POST",
             dataType: "json",
             async: false,

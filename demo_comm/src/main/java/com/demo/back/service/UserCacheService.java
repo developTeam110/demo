@@ -6,9 +6,13 @@ public interface UserCacheService {
 
 	void saveUser(User user);
 
+	void deleteUser(String username);
+
 	User getUser(String username);
 
 	void saveLoginUser(User user);
+
+	void deleteLoginUser(String username);
 
 	User getLoginUser(String username);
 }

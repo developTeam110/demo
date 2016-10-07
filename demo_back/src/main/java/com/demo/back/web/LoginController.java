@@ -16,8 +16,10 @@ import com.demo.back.po.User;
 import com.demo.back.service.UserCacheService;
 import com.demo.back.service.UserService;
 import com.demo.common.constant.ErrorCode;
+import com.demo.common.constant.SecretKeyConstant;
 import com.demo.common.helper.CookieHelper;
 import com.demo.common.helper.UserHelper;
+import com.demo.common.util.EncryptUtil;
 import com.demo.common.util.StringUtil;
 import com.demo.common.vo.Result;
 
@@ -32,8 +34,17 @@ public class LoginController {
 	private UserCacheService userCacheService;
 
 	@RequestMapping(value = "login", method = { RequestMethod.GET })
-	public String doGetlogin(Model model) {
+	public String doGetlogin(Model model, HttpServletRequest request) {
+		model.addAttribute("backUrl", request.getParameter("backUrl"));
 		return "/login";
+	}
+
+	@RequestMapping(value = "relogin", method = { RequestMethod.GET })
+	public String doGetRelogin(Model model, HttpServletRequest request) {
+		User user = CookieHelper.getUserCookie(request);//获取cookie中用户登录信息
+		model.addAttribute("user", user);
+		model.addAttribute("backUrl", request.getParameter("backUrl"));
+		return "/relogin";
 	}
 
 	@ResponseBody
@@ -50,7 +61,8 @@ public class LoginController {
 			return result;
 		}
 
-		User user = userService.getUserByloginNameAndPwd(loginName.trim(), password.trim());
+		String md5Password = EncryptUtil.encodeByMd5(password, SecretKeyConstant.PASSWORD_SECRET_KEY);
+		User user = userService.getUserByloginNameAndPwd(loginName, md5Password);
 		if (user == null) {
 			result.setErrorCode(ErrorCode.PARAM_LOGIN_NAME_OR_PWD_ERROR);
 			return result;
@@ -70,7 +82,7 @@ public class LoginController {
 		user.setLastLoginIp(UserHelper.getIpAddr(request));
 		userService.updateUserByUsername(user);
 
-		CookieHelper.addLoginCookie(request, response, user);
+		CookieHelper.addUserCookie(request, response, user);
 		userCacheService.saveLoginUser(user);
 
 		result.setErrorCode(ErrorCode.SUCCESS);

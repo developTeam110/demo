@@ -5,6 +5,8 @@ import com.demo.common.vo.Page;
 
 public interface UserService {
 
+	void checkUserParam(User user);
+
 	int saveUser(User user);
 
 	int updateUserByUsername(User user);

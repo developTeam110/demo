@@ -21,6 +21,7 @@ import com.demo.common.util.StringUtil;
 
 public class SecurityFilter implements Filter {
 	private static final String LOGIN_URL = "/admin/login.do";
+	private static final String RELOGIN_URL = "/admin/relogin.do";
 	private String trustUrlPatterns = null;
 	private List<String> trustUrls;
 	private ServletContext servletContext;
@@ -45,15 +46,16 @@ public class SecurityFilter implements Filter {
 		}
 
 		User loginUser = UserHelper.getLoginedUserByUsername(username);
+		//跳转过期登录页
 		if (loginUser == null) {
-			//TODO 跳转过期登录页
+			this.redirectToReLogin(httpRequest, httpResponse);
+			return;
 		}
 
-
-		//TODO 校验用户是否有访问该资源权限
+		//校验用户是否有访问该资源权限
 		if (!UserHelper.havePermission(loginUser, url)) {
-			httpRequest.setAttribute("message", "您没有权限访问该资源，请确定您使用的账户[ " + username + " ]拥有访问权限O(∩_∩)O~");
-			httpRequest.getRequestDispatcher("/WEB-INF/pages/message.jsp").forward(httpRequest, httpResponse);
+			httpRequest.getRequestDispatcher("/admin/permission/denied.do").forward(httpRequest, httpResponse);
+			return;
 		}
 
 		chain.doFilter(req, res);
@@ -95,7 +97,23 @@ public class SecurityFilter implements Filter {
 		}
 
 		returnUrl = URLEncoder.encode(returnUrl, "UTF-8");
-		httpResponse.sendRedirect(contextPath + LOGIN_URL + "?returnUrl=" + returnUrl);
+		httpResponse.sendRedirect(contextPath + LOGIN_URL + "?backUrl=" + returnUrl);
+	}
+
+	/**
+	 * 跳转至过期登录
+	 */
+	private void redirectToReLogin(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws IOException {
+		final String queryString = httpRequest.getQueryString();
+		final String contextPath = httpRequest.getContextPath();
+		String returnUrl = httpRequest.getRequestURL().toString();
+
+		if (StringUtil.isNotEmpty(queryString)) {
+			returnUrl += "?" + queryString;
+		}
+
+		returnUrl = URLEncoder.encode(returnUrl, "UTF-8");
+		httpResponse.sendRedirect(contextPath + RELOGIN_URL + "?backUrl=" + returnUrl);
 	}
 
 	@Override

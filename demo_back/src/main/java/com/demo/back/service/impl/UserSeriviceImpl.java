@@ -12,7 +12,6 @@ import com.demo.back.service.UserCacheService;
 import com.demo.back.service.UserService;
 import com.demo.common.constant.ErrorCode;
 import com.demo.common.exception.BusinessException;
-import com.demo.common.helper.UserHelper;
 import com.demo.common.util.StringUtil;
 import com.demo.common.vo.Page;
 import com.google.common.base.Preconditions;
@@ -34,8 +33,6 @@ public class UserSeriviceImpl implements UserService{
 	public int saveUser(User user) {
 		Preconditions.checkArgument(user != null, "user is null.");
 
-		this.checkUserParam(user);
-
 		user.setUsername(StringUtil.generateRandomUsernameByUUID());
 		user.setInnerFlag(user.getInnerFlag() == null ? false : user.getInnerFlag());
 		Date currentDate = new Date();
@@ -44,7 +41,13 @@ public class UserSeriviceImpl implements UserService{
 		return userMapper.save(user);
 	}
 
-	private void checkUserParam(User user) {
+	
+	/**
+	 * 校验用户信息参数合法性
+	 */
+	@Override
+	public void checkUserParam(User user) {
+		Preconditions.checkArgument(user != null, "user is null.");
 
 		/*密码校验*/
 		String password = user.getPassword();
@@ -117,12 +120,21 @@ public class UserSeriviceImpl implements UserService{
 		Preconditions.checkArgument(user != null, "user is null.");
 		Preconditions.checkArgument(StringUtil.isNotEmpty(user.getUsername()), "username is empty.");
 
-		this.checkUserParam(user);
-
 		user.setInnerFlag(user.getInnerFlag() == null ? false : user.getInnerFlag());
 		Date currentDate = new Date();
 		user.setUpdateTime(currentDate);
-		return userMapper.updateByUsername(user);
+
+		int rows = userMapper.updateByUsername(user);
+		if (rows > 0) {
+			if (User.STATUS.DELETE.code().equals(user.getStatus()) || StringUtil.isNotEmpty(user.getPassword())) { //用户删除或秘密修改后清理相应的缓存信息
+				userCacheService.deleteLoginUser(user.getUsername());
+				userCacheService.deleteUser(user.getUsername());
+			} else { //更新用户缓存
+				userCacheService.saveUser(user);
+			}
+		}
+
+		return rows;
 	}
 
 
@@ -132,7 +144,17 @@ public class UserSeriviceImpl implements UserService{
 		Preconditions.checkArgument(StringUtil.isNotEmpty(user.getUsername()), "username is empty.");
 
 		user.setUpdateTime(new Date());
-		return userMapper.updateSelectiveByUsername(user);
+		int rows = userMapper.updateSelectiveByUsername(user);
+		if (rows > 0) {
+			if (User.STATUS.DELETE.code().equals(user.getStatus()) || StringUtil.isNotEmpty(user.getPassword())) { //用户删除或秘密修改后清理相应的缓存信息
+				userCacheService.deleteLoginUser(user.getUsername());
+				userCacheService.deleteUser(user.getUsername());
+			} else { //更新用户缓存
+				userCacheService.saveUser(user);
+			}
+		}
+
+		return rows;
 	}
 
 	@Override

@@ -103,8 +103,8 @@ public class UserHelper {
 			return false;
 		}
 
-		boolean isPermission = true;
-	/*		Long[] roleIds = user.getRoleIds();
+		/*boolean isPermission = true;
+			Long[] roleIds = user.getRoleIds();
 			if (ArrayUtils.isEmpty(roleIds)) {
 				commonRedisService.del(user.getUsername());
 				return false;//用户权限信息为空
@@ -125,7 +125,7 @@ public class UserHelper {
 					break;
 				}
 			}*/
-		return isPermission;
+		return true;
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class UserHelper {
 			return null;
 		}
 
-		return EncryptUtil.decodeCookieValue(token, SecretKeyConstant.TOKEN_SECRET_KEY);
+		return EncryptUtil.decodeCookieValue(token, SecretKeyConstant.COOKIE_SECRET_KEY);
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class UserHelper {
 			return null;
 		}
 
-		return EncryptUtil.encodeCookieValue(username, SecretKeyConstant.TOKEN_SECRET_KEY);
+		return EncryptUtil.encodeCookieValue(username, SecretKeyConstant.COOKIE_SECRET_KEY);
 	}
 
 }

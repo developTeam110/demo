@@ -1,7 +1,6 @@
 package com.demo.back.web;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,8 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,9 +16,10 @@ import com.demo.back.po.User;
 import com.demo.back.service.UserCacheService;
 import com.demo.back.service.UserService;
 import com.demo.common.constant.ErrorCode;
+import com.demo.common.constant.SecretKeyConstant;
 import com.demo.common.exception.BusinessException;
 import com.demo.common.helper.UserHelper;
-import com.demo.common.util.StringUtil;
+import com.demo.common.util.EncryptUtil;
 import com.demo.common.vo.Page;
 import com.demo.common.vo.Result;
 
@@ -60,6 +58,11 @@ public class UserController {
 		Result result = new Result();
 
 		try {
+			userService.checkUserParam(user);//校验参数合法性
+
+			String md5Password = EncryptUtil.encodeByMd5(user.getPassword(), SecretKeyConstant.PASSWORD_SECRET_KEY);
+			user.setPassword(md5Password);
+
 			user.setLastLoginIp(UserHelper.getIpAddr(request));
 			user.setLastLoginTime(new Date());
 			userService.saveUser(user);
@@ -85,6 +88,10 @@ public class UserController {
 		Result result = new Result();
 
 		try {
+			userService.checkUserParam(user);//校验参数合法性
+
+			String md5Password = EncryptUtil.encodeByMd5(user.getPassword(), SecretKeyConstant.PASSWORD_SECRET_KEY);
+			user.setPassword(md5Password);
 			userService.updateUserByUsername(user);
 			result.setErrorCode(ErrorCode.SUCCESS);
 		} catch (BusinessException e) {
@@ -109,7 +116,6 @@ public class UserController {
 				paramUser.setUsername(username);
 				paramUser.setStatus(User.STATUS.DELETE.code());
 				userService.updateUserSelectiveByUsername(paramUser);
-				//TODO 删除缓存
 			}
 			result.setErrorCode(ErrorCode.SUCCESS);
 		} catch (BusinessException e) {

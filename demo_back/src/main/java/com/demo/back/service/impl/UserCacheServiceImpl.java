@@ -22,6 +22,11 @@ public class UserCacheServiceImpl implements UserCacheService{
 	}
 
 	@Override
+	public void deleteUser(String username) {
+		redisService.hdel(CacheEnum.USER_MAP_KEY_USERNAME.key(), username);
+	}
+
+	@Override
 	public User getUser(String username) {
 		return redisService.hget(CacheEnum.USER_MAP_KEY_USERNAME.key(), username, User.class);
 	}
@@ -29,6 +34,11 @@ public class UserCacheServiceImpl implements UserCacheService{
 	@Override
 	public void saveLoginUser(User user) {
 		redisService.setAndExpire(user.getUsername(), JsonUtil.Object2Json(user), CacheEnum.USER_LOGIN_MAP_KEY_USERNAME.seconds());
+	}
+
+	@Override
+	public void deleteLoginUser(String username) {
+		redisService.del(username);
 	}
 
 	@Override

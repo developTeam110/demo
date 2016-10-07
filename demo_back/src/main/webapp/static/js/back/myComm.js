@@ -17,7 +17,7 @@ $(function () {
             if (obj instanceof jQuery) { 
                 return obj.length == 0;
             } else {
-            	if (obj == null || obj == 'undefined') {
+            	if (obj == null || obj == 'undefined' || obj == "") {
             		return true;
             	} else {
             		return false;

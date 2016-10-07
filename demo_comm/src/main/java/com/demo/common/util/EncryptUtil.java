@@ -1,11 +1,16 @@
 package com.demo.common.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.logging.LogFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.demo.common.constant.CookieConstant;
 import com.demo.common.helper.CookieHelper;
 
 
@@ -22,6 +27,17 @@ public class EncryptUtil {
 		}
 
 		return DigestUtils.md5Hex(str);
+	}
+
+	/**
+	 * 利用MD5进行加密，带加密串
+	 */
+	public static String encodeByMd5(String str, String key) {
+		if (str == null) {
+			str = "";
+		}
+
+		return DigestUtils.md5Hex(str + key);
 	}
 
 	public static String EncodeByRC4(String aInput, String aKey) {
@@ -98,4 +114,43 @@ public class EncryptUtil {
 		return str;
 	}
 
+	/**
+	 * 对URL转码
+	 * @param url 对URL编码
+	 * @return 编码后的值
+	 */
+	public static String encodeURL(String url) {
+		if (StringUtil.isEmpty(url)) {
+			return null;
+		}
+
+		String enUrl = null;
+		try {
+			 enUrl = URLEncoder.encode(url, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		return enUrl;
+	}
+
+	/**
+	 * 对URL转码
+	 * @param enUrl 编码的URL
+	 * @return 解码后的值
+	 */
+	public static String decodeURL(String enUrl) {
+		if (StringUtil.isEmpty(enUrl)) {
+			return null;
+		}
+
+		String url = null;
+		try {
+			 url = URLDecoder.decode(enUrl, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		return url;
+	}
 }
