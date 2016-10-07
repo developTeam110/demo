@@ -20,6 +20,8 @@ import com.demo.common.constant.SecretKeyConstant;
 import com.demo.common.exception.BusinessException;
 import com.demo.common.helper.UserHelper;
 import com.demo.common.util.EncryptUtil;
+import com.demo.common.util.PhoneUtil;
+import com.demo.common.util.StringUtil;
 import com.demo.common.vo.Page;
 import com.demo.common.vo.Result;
 
@@ -60,8 +62,14 @@ public class UserController {
 		try {
 			userService.checkUserParam(user);//校验参数合法性
 
+			//加密密码
 			String md5Password = EncryptUtil.encodeByMd5(user.getPassword(), SecretKeyConstant.PASSWORD_SECRET_KEY);
 			user.setPassword(md5Password);
+
+			//加密手机号
+			if (StringUtil.isNotEmpty(user.getPhone())) {
+				user.setPhone(PhoneUtil.encodeByAes(user.getPhone()));
+			}
 
 			user.setLastLoginIp(UserHelper.getIpAddr(request));
 			user.setLastLoginTime(new Date());

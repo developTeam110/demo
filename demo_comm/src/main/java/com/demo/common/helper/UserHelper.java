@@ -1,8 +1,5 @@
 package com.demo.common.helper;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -68,34 +65,19 @@ public class UserHelper {
 			return null;
 		}
 
+		String username = tokenToUsername(token);
+		if (StringUtil.isNotEmpty(username)) {
+			return username;
+		}
+
 		//token可能有特殊字符，前端encode了，这里需要decode一下
-		String urlEncodedUsername = "";
-		try {
-			urlEncodedUsername = URLDecoder.decode(token, "UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			logger.error("getLoginedUserByToken decode encodedUsername error!", e1);
+		String decodetoken = EncryptUtil.decodeURL(token);
+		username = tokenToUsername(decodetoken);
+		if (StringUtil.isNotEmpty(username)) {
+			return username;
 		}
 
-		String username = null;
-		//先根据urlEncodedUsername解
-		try {
-			username = tokenToUsername(token);
-			logger.info("decode username is [{}]", username);
-		} catch (Exception e1) {
-			logger.error("getLoginedUser encounter an decode cookie exception : ", e1);
-		}
-
-		//根据encodedUsername解
-		if (StringUtil.isEmpty(username)) {
-			try {
-				username = tokenToUsername(token);
-
-			} catch (Exception e1) {
-				logger.error("getLoginedUser encounter an decode cookie exception : ", e1);
-			}
-		}
-
-		return username;
+		return null;
 	}
 
 	public static boolean havePermission(User user, String url) {

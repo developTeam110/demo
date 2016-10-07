@@ -16,7 +16,7 @@ toastr.options = {
 }
 
 /* jquery 验证添加自定义方法*/
-jQuery.validator.addMethod("phone", function(value, element) { 
+jQuery.validator.addMethod("mobile", function(value, element) { 
 	var length = value.length; 
 	var mobile = /^((1[0,3,5,8][0-9])|(14[5,7])|(17[0,1,3,6,7,8]))\d{8}$/;
 	return this.optional(element) || (length == 11 && mobile.test(value)); 
@@ -44,7 +44,9 @@ jQuery.validator.addMethod("chinese", function(value, element) {
 
 jQuery.validator.addMethod("loginName", function(value, element) {
 	var loginName = /^\w{4,16}$/;
-	return this.optional(element) || (loginName.test(value));
+	var email = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+	var mobile = /^((1[0,3,5,8][0-9])|(14[5,7])|(17[0,1,3,6,7,8]))\d{8}$/;
+	return this.optional(element) || (loginName.test(value) && !email.test(value) && !mobile.test(value));
 	}, "登录名格式错误");
 
 jQuery.validator.addMethod("password", function(value, element) {

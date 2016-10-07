@@ -12,6 +12,10 @@ import com.demo.back.service.UserCacheService;
 import com.demo.back.service.UserService;
 import com.demo.common.constant.ErrorCode;
 import com.demo.common.exception.BusinessException;
+import com.demo.common.util.EmailUtil;
+import com.demo.common.util.LoginNameUtil;
+import com.demo.common.util.PasswordUtil;
+import com.demo.common.util.PhoneUtil;
 import com.demo.common.util.StringUtil;
 import com.demo.common.vo.Page;
 import com.google.common.base.Preconditions;
@@ -55,7 +59,7 @@ public class UserSeriviceImpl implements UserService{
 			throw new BusinessException(ErrorCode.PARAM_PASSWORD_NOT_EMPTY);
 		}
 
-		if (!StringUtil.isValidPassword(password)) {
+		if (!PasswordUtil.isValid(password)) {
 			throw new BusinessException(ErrorCode.PARAM_PASSWORD_INVALID);
 		}
 
@@ -68,7 +72,7 @@ public class UserSeriviceImpl implements UserService{
 		/*登录名校验*/
 		String loginString = user.getLoginString();
 		if (StringUtil.isNotEmpty(loginString)) {
-			if (!StringUtil.isValidLoginName(loginString)) {
+			if (!LoginNameUtil.isValid(loginString)) {
 				throw new BusinessException(ErrorCode.PARAM_LOGIN_NAME_INVALID);
 			}
 
@@ -84,7 +88,7 @@ public class UserSeriviceImpl implements UserService{
 		/*邮箱校验*/
 		String email = user.getEmail();
 		if (StringUtil.isNotEmpty(email)) {
-			if (!StringUtil.isValidEmail(email)) {
+			if (!EmailUtil.isValid(email)) {
 				throw new BusinessException(ErrorCode.PARAM_EMAIL_INVALID);
 			}
 
@@ -100,19 +104,18 @@ public class UserSeriviceImpl implements UserService{
 		/*电话号校验*/
 		String phone = user.getPhone();
 		if (StringUtil.isNotEmpty(phone)) {
-			if (!StringUtil.isValidPhone(phone)) {
+			if (!PhoneUtil.isValid(phone)) {
 				throw new BusinessException(ErrorCode.PARAM_EMAIL_INVALID);
 			}
 
 			User paramUser = new User();
 			paramUser.setExcludeUsername(user.getUsername());
-			paramUser.setPhone(phone);
+			paramUser.setPhone(PhoneUtil.encodeByAes(phone));
 			int count = userMapper.getCountByCondition(null, paramUser);
 			if (count > 0) {
 				throw new BusinessException(ErrorCode.PARAM_PHONE_IS_EXISTED);
 			}
 		}
-
 	}
 
 	@Override

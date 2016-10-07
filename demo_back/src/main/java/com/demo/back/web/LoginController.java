@@ -20,6 +20,7 @@ import com.demo.common.constant.SecretKeyConstant;
 import com.demo.common.helper.CookieHelper;
 import com.demo.common.helper.UserHelper;
 import com.demo.common.util.EncryptUtil;
+import com.demo.common.util.PhoneUtil;
 import com.demo.common.util.StringUtil;
 import com.demo.common.vo.Result;
 
@@ -59,6 +60,10 @@ public class LoginController {
 		if (StringUtil.isEmpty(password)) {
 			result.setErrorCode(ErrorCode.PARAM_PASSWORD_NOT_EMPTY);
 			return result;
+		}
+
+		if (PhoneUtil.isValid(loginName)) {//如果为手机登陆进行加密
+			loginName = PhoneUtil.encodeByAes(loginName);
 		}
 
 		String md5Password = EncryptUtil.encodeByMd5(password, SecretKeyConstant.PASSWORD_SECRET_KEY);

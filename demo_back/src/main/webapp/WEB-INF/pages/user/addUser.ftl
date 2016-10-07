@@ -32,7 +32,7 @@
                             <label class="col-sm-3 control-label">登录名：</label>
                             <div class="col-sm-8">
                                 <input name="loginString" class="form-control" type="text">
-                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>4到16个英文字符、数字或下划线</span>
+                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>4到16个英文字符、数字或下划线（不能为手机号、邮箱）</span>
                             </div>
                         </div>
 
@@ -127,7 +127,7 @@
                   email: true
               },
               phone: {
-                  phone: true
+                  mobile: true
               },
               nickname: {
                 required: true
