@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.demo.back.dao.UserMapper;
 import com.demo.back.po.User;
@@ -192,6 +193,13 @@ public class UserSeriviceImpl implements UserService{
 		page.setTotal(count);
 		if (count != 0) {
 			List<User> userList = userMapper.getListByCondition(page, user);
+			if (!CollectionUtils.isEmpty(userList)) {
+				for (User userModel : userList) {
+					if (StringUtil.isNotEmpty(userModel.getPhone())) {
+						userModel.setPhone(PhoneUtil.fuzzy(PhoneUtil.decodeByAes(userModel.getPhone())));
+					}
+				}
+			}
 			page.setRows(userList);
 		}
 		return page;
