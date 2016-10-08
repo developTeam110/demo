@@ -44,6 +44,10 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "list", method = { RequestMethod.GET, RequestMethod.POST })
 	public Object getUserList(HttpServletRequest request, HttpServletResponse response, Page<User> paramPage, User paramUser) {
+		if (StringUtil.isNotEmpty(paramUser.getPhone())) {
+			paramUser.setPhone(PhoneUtil.encodeByAes(paramUser.getPhone()));
+		}
+
 		Page<User> resultPage = userService.getPageByCondition(paramPage, paramUser);
 		return resultPage;
 	}

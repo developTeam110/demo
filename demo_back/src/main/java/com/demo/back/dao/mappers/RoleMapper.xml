@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.back.dao.RoleMapper">
+
+    <resultMap type="Role" id="RoleResultMap">
+        <id property="id" column="id" />
+        <result property="code" column="code" />
+        <result property="name" column="name" />
+        <result property="desc" column="desc" />
+        <result property="sort" column="sort" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+    </resultMap>
+
+    <sql id="Base_Query_Column_List" >
+        <if test="role.id!=null and role.id!='' "> AND `id`=#{role.id}</if>
+        <if test="role.code!=null and role.code!='' "> AND `code`=#{role.code}</if>
+        <if test="role.name!=null and role.name!='' "> AND `name`=#{role.name}</if>
+        <if test="role.desc!=null and role.desc!='' "> AND `desc`=#{role.desc}</if>
+        <if test="role.sort!=null"> AND `sort`=#{role.sort}</if>
+        <if test="role.createTime!=null"> AND `create_time`=#{role.createTime}</if>
+        <if test="role.updateTime!=null"> AND `update_time`=#{role.updateTime}</if>
+    </sql>
+
+    <insert id="save" parameterType="Role">
+        INSERT INTO `t_role`
+        (
+        `code`,
+        `name`,
+        `desc`,
+        `sort`,
+        `create_time`,
+        `update_time`
+        )
+        VALUES (
+        #{code},
+        #{name},
+        #{desc},
+        #{sort},
+        #{createTime},
+        #{updateTime}
+        )
+        <selectKey keyProperty="id" resultType="long" order="AFTER">
+            SELECT LAST_INSERT_ID() AS value
+        </selectKey>
+    </insert>
+
+    <update id="updateById" parameterType="Role">
+        UPDATE `t_role`
+        <set>
+            `code`=#{code},
+            `name`=#{name},
+            `desc`=#{desc},
+            `sort`=#{sort},
+            `update_time`=#{updateTime}
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateSelectiveById" parameterType="Role">
+        UPDATE `t_role`
+        <set>
+            <if test="code != null and code != ''">`code`=#{code},</if>
+            <if test="name != null and name != ''">`name`=#{name},</if>
+            <if test="desc != null and desc != ''">`desc`=#{desc},</if>
+            <if test="sort != null">`sort`=#{sort},</if>
+            <if test="updateTime != null">`update_time`=#{updateTime},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="getById" parameterType="long" resultMap="RoleResultMap">
+        SELECT * FROM `t_role`
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <select id="getListByCondition" parameterType="Role" resultMap="RoleResultMap">
+        SELECT * FROM `t_role`
+        <where>
+            1=1
+            <include refid="Base_Query_Column_List" />
+        </where>
+
+        <if test="page != null">
+            <if test="page.sort != null and page.sort != ''">
+                ORDER BY `${page.sort}` ${page.order}
+            </if>
+            <if test="page.sort == null or page.sort == ''">
+                ORDER BY `create_time` DESC
+            </if>
+
+            LIMIT #{page.offset}, #{page.limit}
+        </if>
+    </select>
+
+    <select id="getCountByCondition" parameterType="Role" resultType="int">
+        SELECT count(*) FROM `t_role`
+        <where>
+            1=1
+            <include refid="Base_Query_Column_List" />
+        </where>
+    </select>
+
+    <delete id="deleteByIds">
+        DELETE FROM `t_role`
+        <where>
+            `id` IN
+            <foreach collection="ids" close=")" item="id" open="(" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </delete>
+
+</mapper>

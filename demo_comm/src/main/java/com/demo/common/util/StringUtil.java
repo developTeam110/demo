@@ -1,7 +1,6 @@
 package com.demo.common.util;
 
 import java.util.UUID;
-import java.util.regex.Pattern;
 
 public class StringUtil {
 

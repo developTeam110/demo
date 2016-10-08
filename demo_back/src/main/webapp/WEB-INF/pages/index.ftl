@@ -60,7 +60,7 @@
                                 <a class="J_menuItem" href="${rc.contextPath}/admin/user/toList.do" data-index="0">用户</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="index_v2.html">主页示例二</a>
+                                <a class="J_menuItem" href="${rc.contextPath}/admin/role/toList.do" data-index="1">角色</a>
                             </li>
                         </ul>
 

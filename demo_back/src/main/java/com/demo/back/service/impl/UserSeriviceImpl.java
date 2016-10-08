@@ -21,10 +21,6 @@ import com.demo.common.util.StringUtil;
 import com.demo.common.vo.Page;
 import com.google.common.base.Preconditions;
 
-/**
- * @author Administrator
- *
- */
 @Service(value="userService")
 public class UserSeriviceImpl implements UserService{
 
@@ -34,19 +30,6 @@ public class UserSeriviceImpl implements UserService{
 	@Autowired
 	private UserCacheService userCacheService;
 
-	@Override
-	public int saveUser(User user) {
-		Preconditions.checkArgument(user != null, "user is null.");
-
-		user.setUsername(StringUtil.generateRandomUsernameByUUID());
-		user.setInnerFlag(user.getInnerFlag() == null ? false : user.getInnerFlag());
-		Date currentDate = new Date();
-		user.setCreateTime(currentDate);
-		user.setUpdateTime(currentDate);
-		return userMapper.save(user);
-	}
-
-	
 	/**
 	 * 校验用户信息参数合法性
 	 */
@@ -117,6 +100,18 @@ public class UserSeriviceImpl implements UserService{
 				throw new BusinessException(ErrorCode.PARAM_PHONE_IS_EXISTED);
 			}
 		}
+	}
+
+	@Override
+	public int saveUser(User user) {
+		Preconditions.checkArgument(user != null, "user is null.");
+
+		user.setUsername(StringUtil.generateRandomUsernameByUUID());
+		user.setInnerFlag(user.getInnerFlag() == null ? false : user.getInnerFlag());
+		Date currentDate = new Date();
+		user.setCreateTime(currentDate);
+		user.setUpdateTime(currentDate);
+		return userMapper.save(user);
 	}
 
 	@Override

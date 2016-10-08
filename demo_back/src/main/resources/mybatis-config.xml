@@ -5,8 +5,10 @@
 
 <configuration>
 
-	<typeAliases>
-		<typeAlias alias="User" type="com.demo.back.po.User" />
-	</typeAliases>
+    <typeAliases>
+        <typeAlias alias="User" type="com.demo.back.po.User" />
+        <typeAlias alias="Role" type="com.demo.back.po.Role" />
+        <typeAlias alias="Resource" type="com.demo.back.po.Resource" />
+    </typeAliases>
 
 </configuration>

@@ -17,11 +17,11 @@ $(function () {
             if (obj instanceof jQuery) { 
                 return obj.length == 0;
             } else {
-            	if (obj == null || obj == 'undefined' || obj == "") {
-            		return true;
-            	} else {
-            		return false;
-            	}
+                if (obj == null || obj == 'undefined' || obj == "") {
+                    return true;
+                } else {
+                    return false;
+                }
 
                 var name;
                 for (name in obj ) {
@@ -99,8 +99,8 @@ $(function () {
         deleteItems: function (uniqueids) {
             var url = this.DELETE_URL;
             if (my.isEmpty(url)) {
-            	swal({title: "没有设置删除的URL",text: "请在table中设置data-delete-url项"})
-            	return false;
+                swal({title: "没有设置删除的URL",text: "请在table中设置data-delete-url项"})
+                return false;
             }
 
             if (my.isEmpty(uniqueids)) {

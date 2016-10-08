@@ -25,7 +25,7 @@
                     <h5>编辑用户</h5>
                 </div>
                 <div class="ibox-content">
-                    <form class="form-horizontal m-t" id="editUserForm" action="#">
+                    <form class="form-horizontal m-t" id="userForm" action="#">
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">用户名：</label>
@@ -123,7 +123,7 @@
     <script>
     $().ready(function(){//jquery init start
 
-        $("#editUserForm").validate({
+        $("#userForm").validate({
             rules: {
               loginString: {
                   required: true,

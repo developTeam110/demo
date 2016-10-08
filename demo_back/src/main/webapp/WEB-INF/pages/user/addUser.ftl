@@ -26,7 +26,7 @@
                     <h5>添加用户</h5>
                 </div>
                 <div class="ibox-content">
-                    <form class="form-horizontal m-t" id="addUserForm" action="#">
+                    <form class="form-horizontal m-t" id="userForm" action="#">
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">登录名：</label>
@@ -117,7 +117,7 @@
     <script>
     $().ready(function(){//jquery init start
 
-        $("#addUserForm").validate({
+        $("#userForm").validate({
             rules: {
               loginString: {
                   required: true,
