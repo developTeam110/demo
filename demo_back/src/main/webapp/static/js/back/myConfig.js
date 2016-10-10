@@ -53,3 +53,9 @@ jQuery.validator.addMethod("password", function(value, element) {
 	var password = /^\w{6,16}$/;
 	return this.optional(element) || (password.test(value));
 	}, "密码格式错误");
+
+
+/*配置默认头像*/
+$("img[data-role='head']").error(function () {
+	$(this).attr("src", "/demo_back/static/img/comm/man.jpg");
+});

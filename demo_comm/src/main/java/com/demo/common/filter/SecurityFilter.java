@@ -31,7 +31,7 @@ public class SecurityFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) req;
 		HttpServletResponse httpResponse = (HttpServletResponse) res;
 
-		final String url = FilterUtil.getRequestedUrl(req);
+/*		final String url = FilterUtil.getRequestedUrl(req);
 
 		//校验该资源是否是受检资源
 		if (!this.isProtectedUrl(url)) {
@@ -56,7 +56,7 @@ public class SecurityFilter implements Filter {
 		if (!UserHelper.havePermission(loginUser, url)) {
 			httpRequest.getRequestDispatcher("/admin/permission/denied.do").forward(httpRequest, httpResponse);
 			return;
-		}
+		}*/
 
 		chain.doFilter(req, res);
 	}
