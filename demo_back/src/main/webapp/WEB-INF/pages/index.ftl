@@ -65,6 +65,20 @@
                         </ul>
 
                     </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-users"></i>
+                            <span class="nav-label">系统管理</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="${rc.contextPath}/admin/file/toUpload.do" data-index="0">图片上传</a>
+                            </li>
+                        </ul>
+
+                    </li>
                     <#--菜单栏结束-->
 
                 </ul>

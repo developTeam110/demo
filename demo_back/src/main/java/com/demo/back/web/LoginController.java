@@ -95,7 +95,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "logout", method = { RequestMethod.GET, RequestMethod.POST })
-	public String getTest(Model model, String username) {
+	public String logout(Model model, String username) {
 		User user = userService.getUserFromCacheOrDbByUsername(username);
 		System.out.println(user);
 		return "/login";
