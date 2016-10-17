@@ -3,8 +3,8 @@
 <script src="${rc.contextPath}/static/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="${rc.contextPath}/static/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="${rc.contextPath}/static/js/plugins/layer/layer.min.js"></script>
-<script src="${rc.contextPath}/static/js/hplus.min.js?v=4.1.0"></script>
-<script src="${rc.contextPath}/static/js/contabs.min.js"></script>
+<script src="${rc.contextPath}/static/js/hplus.js?v=4.1.0"></script>
+<script src="${rc.contextPath}/static/js/contabs.js"></script>
 <script src="${rc.contextPath}/static/js/plugins/pace/pace.min.js"></script>
 
 <script src="${rc.contextPath}/static/js/content.min.js?v=1.0.0"></script>

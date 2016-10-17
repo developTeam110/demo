@@ -97,29 +97,39 @@ $(function() {
         }
     });
     function c() {
+    	var $leftMeumLi = $(this);
         var o = $(this).attr("href"),
         m = $(this).data("index"),
         l = $.trim($(this).text()),
-        k = true;
+        k = true
+        exist = false;
         if (o == undefined || $.trim(o).length == 0) {
             return false
         }
         $(".J_menuTab").each(function() {
             if ($(this).data("id") == o) {
-                if (!$(this).hasClass("active")) {
-                    $(this).addClass("active").siblings(".J_menuTab").removeClass("active");
-                    g(this);
-                    $(".J_mainContent .J_iframe").each(function() {
-                        if ($(this).data("id") == o) {
-                            $(this).show().siblings(".J_iframe").hide();
-                            return false
-                        }
-                    })
-                }
-                k = false;
-                return false
+            	//$(this).find("i").trigger("click");
+            	exist = true;
+            	return false;
+//                if (!$(this).hasClass("active")) {
+//                    $(this).addClass("active").siblings(".J_menuTab").removeClass("active");
+//                    g(this);
+//                    $(".J_mainContent .J_iframe").each(function() {
+//                        if ($(this).data("id") == o) {
+//                            $(this).show().siblings(".J_iframe").hide();
+//                            return false
+//                        }
+//                    })
+//                }
+//                k = false;
+//                return false
             }
         });
+
+        if (exist) {
+        	$leftMeumLi.trigger("click");
+        }
+
         if (k) {
             var p = '<a href="javascript:;" class="active J_menuTab" data-id="' + o + '">' + l + ' <i class="fa fa-times-circle"></i></a>';
             $(".J_menuTab").removeClass("active");
