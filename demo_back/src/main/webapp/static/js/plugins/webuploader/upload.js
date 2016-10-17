@@ -544,6 +544,7 @@
         });
 
         uploader.onError = function( code ) {
+        	console.log(code);//F_DUPLICATE
             alert( 'Eroor: ' + code );
         };
 
