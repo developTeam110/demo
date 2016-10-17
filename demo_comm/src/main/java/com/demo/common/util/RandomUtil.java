@@ -60,12 +60,4 @@ public class RandomUtil {
 		return generateString(6);
 	}
 
-	public static void main(String[] args) {
-		System.out.println(new RandomUtil().getRandom());
-		System.out.println(generateString(10));
-		System.out.println(generateCodeString(10));
-		System.out.println(generateNumCodeString(10));
-		String name = RandomUtil.generateString(10) + RandomUtil.generateCodeString(2);
-		System.out.println(name);
-	}
 }

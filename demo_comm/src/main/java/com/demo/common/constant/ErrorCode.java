@@ -33,13 +33,14 @@ public enum ErrorCode {
 	PARAM_PASSWORD_INVALID(10202, "密码格式不正确"),
 	PARAM_EMAIL_INVALID(10203, "邮箱格式不正确"),
 	PARAM_PHONE_INVALID(10204, "无效的手机号码"),
+	PARAM_IMAGE_SUFFIX_INVALID(10205, "图片格式不允许"),
 
 	//（4）10301~10400 已存在错误
 	PARAM_LOGIN_NAME_IS_EXISTED(10301, "登录名已经存在"),
 	PARAM_EMAIL_IS_EXISTED(10302, "邮箱已经存在"),
 	PARAM_PHONE_IS_EXISTED(10302, "电话号已经存在"),
 
-	//（4）10401~19999 其他参数错误 
+	//（5）10401~19999 其他参数错误 
 	PARAM_LOGIN_NAME_OR_PWD_ERROR(10401, "登录名或密码错误"),
 
 	/* 用户错误：20001-29999 */
