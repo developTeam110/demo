@@ -77,6 +77,14 @@
                         </td>
 
                         <td>
+                            <label>创建时间：</label>
+                        </td>
+                        <td>
+                            <input placeholder="开始日期" class="form-control layer-date" id="start">
+                            <input placeholder="结束日期" class="form-control layer-date" id="end">
+                        </td>
+
+                        <td>
                             <button type="button" class="btn btn-default JS_search_btn ">
                                 <i class="glyphicon glyphicon-search"></i>
                             </button>
@@ -200,6 +208,36 @@
                 window.myTable.deleteItems([row.username]);
             }
         };
+
+    laydate({
+        elem: "#hello",
+        event: "focus"
+    });
+    var start = {
+        elem: "#start",
+        format: "YYYY/MM/DD hh:mm:ss",
+        min: laydate.now(),
+        max: "2099-06-16 23:59:59",
+        istime: true,
+        istoday: false,
+        choose: function(datas) {
+            end.min = datas;
+            end.start = datas
+        }
+    };
+    var end = {
+        elem: "#end",
+        format: "YYYY/MM/DD hh:mm:ss",
+        min: laydate.now(),
+        max: "2099-06-16 23:59:59",
+        istime: true,
+        istoday: false,
+        choose: function(datas) {
+            start.max = datas
+        }
+    };
+    laydate(start);
+    laydate(end);
 
     </script>
 

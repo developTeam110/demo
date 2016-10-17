@@ -2,6 +2,7 @@ package com.demo.common.util;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
 /**
 * REVIEW
@@ -13,7 +14,7 @@ import java.util.Date;
 public class ImageUtil {
 
 	private static final String ALLOWED_IMAGE_SUFFIX = ".bmp|.jpg|.jpeg|.gif|.png";
-	private static final String BASE_PATH = "/usr/local/static/uploadstore/";
+	private static final String BASE_PATH = "/usr/local/static/uploadstore";
 
 	/**
 	* REVIEW
@@ -28,7 +29,7 @@ public class ImageUtil {
 			return false;
 		}
 
-		String[] allowedSuffies = ALLOWED_IMAGE_SUFFIX.split("|");
+		String[] allowedSuffies = ALLOWED_IMAGE_SUFFIX.split("\\|");
 		for (String allow : allowedSuffies) {
 			if (suffix.equals(allow))
 				return true;
@@ -45,11 +46,11 @@ public class ImageUtil {
 	* @author jingkun.wang
 	* @date 2016年10月13日 上午11:09:29
 	*/
-	public static String getImageStorePath(Date date) {
+	public static String getImageStorePath(Date currentDate) {
 		//String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path
 		String fileSeprator = FileUtil.FILE_SEPRATOR;
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
+		cal.setTime(currentDate);
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH);
 		int day = cal.get(Calendar.DATE);
@@ -57,4 +58,14 @@ public class ImageUtil {
 		return new String(new StringBuilder(BASE_PATH).append(fileSeprator).append(year).append(fileSeprator).append(month).append(fileSeprator).append(day).append(fileSeprator));
 	}
 
+	/**
+	* REVIEW
+	* @Description: 生成随机的文件名称字符串
+	* @return 名称字符串
+	* @author jingkun.wang
+	* @date 2016年10月13日 上午11:09:29
+	*/
+	public static String generateRandomName() {
+		return UUID.randomUUID().toString().replace("-", "").substring(0, 10);
+	}
 }

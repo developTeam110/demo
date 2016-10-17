@@ -23,7 +23,8 @@
                     <div class="progress">
                         <span class="text">0%</span>
                         <span class="percentage"></span>
-                    </div><div class="info"></div>
+                    </div>
+                    <div class="info"></div>
                     <div class="btns">
                         <div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
                     </div>

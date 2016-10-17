@@ -21,5 +21,7 @@
 
 <script src="${rc.contextPath}/static/js/plugins/moment/moment.min.js"></script>
 
+<script src="${rc.contextPath}/static/js/plugins/layer/laydate/laydate.js"></script>
+
 <script src="${rc.contextPath}/static/js/back/myConfig.js"></script>
 <script src="${rc.contextPath}/static/js/back/myComm.js"></script>
