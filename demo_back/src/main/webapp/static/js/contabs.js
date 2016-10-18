@@ -106,9 +106,9 @@ $(function() {
         if (o == undefined || $.trim(o).length == 0) {
             return false
         }
-        $(".J_menuTab").each(function() {
+        $(".J_menuTabs .J_menuTab").each(function() {
             if ($(this).data("id") == o) {
-            	//$(this).find("i").trigger("click");
+            	$(".J_menuTabs .J_menuTab").find("a[data-id="+$(this).data("id")+"]").find("i").click();
             	exist = true;
             	return false;
 //                if (!$(this).hasClass("active")) {
@@ -125,10 +125,6 @@ $(function() {
 //                return false
             }
         });
-
-        if (exist) {
-        	$leftMeumLi.trigger("click");
-        }
 
         if (k) {
             var p = '<a href="javascript:;" class="active J_menuTab" data-id="' + o + '">' + l + ' <i class="fa fa-times-circle"></i></a>';

@@ -68,13 +68,16 @@
 
                     <li>
                         <a href="#">
-                            <i class="fa fa-users"></i>
+                            <i class="fa fa-wrench"></i>
                             <span class="nav-label">系统管理</span>
                             <span class="fa arrow"></span>
                         </a>
                         <ul class="nav nav-second-level">
                             <li>
                                 <a class="J_menuItem" href="${rc.contextPath}/admin/file/toUpload.do" data-index="0">图片上传</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="${rc.contextPath}/admin/resource/toList.do" data-index="1">系统资源</a>
                             </li>
                         </ul>
 
