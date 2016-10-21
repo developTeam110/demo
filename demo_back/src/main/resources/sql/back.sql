@@ -72,3 +72,14 @@ CREATE TABLE `t_role_resource` (
 -- ----------------------------
 -- The above executed at 2016-08-25
 -- ----------------------------
+
+DROP TABLE IF EXISTS `t_image`;
+CREATE TABLE `t_image` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `path` varchar(500) NOT NULL COMMENT '图片路径',
+  `type` int(11) DEFAULT NULL COMMENT '类型',
+  `status` TINYINT(1) DEFAULT NULL COMMENT '状态',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='图片存储表';

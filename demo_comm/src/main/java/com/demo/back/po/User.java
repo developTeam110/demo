@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.demo.common.anno.Transient;
 
-public class User implements Serializable{
+public class User implements Serializable {
 
 	private static final long serialVersionUID = 6590442372651263418L;
 
