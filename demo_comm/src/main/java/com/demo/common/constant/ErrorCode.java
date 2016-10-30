@@ -27,7 +27,6 @@ public enum ErrorCode {
 	PARAM_NICKNAME_NOT_EMPTY(100103, "昵称不能为空"),
 	PARAM_CODE_NOT_EMPTY(100104, "编码不能为空"),
 	PARAM_NAME_NOT_EMPTY(100105, "名称不能为空"),
-	PARAM_URL_NOT_EMPTY(100106, "资源URL不能为空"),
 
 	//（3）10201~10300 格式错误
 	PARAM_LOGIN_NAME_INVALID(10201, "登录名格式不正确"),
@@ -39,7 +38,7 @@ public enum ErrorCode {
 	//（4）10301~10400 已存在错误
 	PARAM_LOGIN_NAME_IS_EXISTED(10301, "登录名已经存在"),
 	PARAM_EMAIL_IS_EXISTED(10302, "邮箱已经存在"),
-	PARAM_PHONE_IS_EXISTED(10303, "电话号已经存在"),
+	PARAM_PHONE_IS_EXISTED(10302, "电话号已经存在"),
 
 	//（5）10401~19999 其他参数错误 
 	PARAM_LOGIN_NAME_OR_PWD_ERROR(10401, "登录名或密码错误"),

@@ -26,19 +26,19 @@
                     <h5>编辑资源</h5>
                 </div>
                 <div class="ibox-content">
-                    <form class="form-horizontal m-t" id="resourceForm" action="#">
+                    <form class="form-horizontal m-t" id="roleForm" action="#">
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">主键ID：</label>
                             <div class="col-sm-8">
-                                <input name="id" class="form-control" type="text" value="${resource.id}" readonly="readonly">
+                                <input name="id" class="form-control" type="text" value="${role.id}" readonly="readonly">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">编码：</label>
                             <div class="col-sm-8">
-                                <input name="code" class="form-control" type="text" value="${resource.code}">
+                                <input name="code" class="form-control" type="text" value="${role.code}">
                                 <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>1到64个英文字符</span>
                             </div>
                         </div>
@@ -46,15 +46,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">名称：</label>
                             <div class="col-sm-8">
-                                <input name="name" class="form-control" type="text" value="${resource.name}">
-                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>1到64个英文字符</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">URL资源：</label>
-                            <div class="col-sm-8">
-                                <input name="url" class="form-control" type="text" value="${resource.name}">
+                                <input name="name" class="form-control" type="text" value="${role.name}">
                                 <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>1到64个英文字符</span>
                             </div>
                         </div>
@@ -62,14 +54,14 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">描述：</label>
                             <div class="col-sm-8">
-                                <textarea name="desc" class="form-control">${resource.desc}</textarea>
+                                <textarea name="desc" class="form-control">${role.desc}</textarea>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">排序值：</label>
                             <div class="col-sm-8">
-                                <input name="sort" class="form-control" type="text" value="${resource.sort}">
+                                <input name="sort" class="form-control" type="text" value="${role.sort}">
                             </div>
                         </div>
 
@@ -90,7 +82,7 @@
     <script>
     $().ready(function(){//jquery init start
 
-        $("#resourceForm").validate({
+        $("#roleForm").validate({
             rules: {
               code: {
                   required: true,
@@ -100,10 +92,6 @@
                   required: true,
                   rangelength:[1,64]
               },
-              url: {
-                  required: true,
-                  rangelength:[1,500]
-              },
               sort: {
                   digits:true
               }
@@ -111,14 +99,14 @@
             submitHandler: function(form) {
                 var $form = $(form);
                 $.ajax({
-                    url: "${rc.contextPath}/admin/resource/edit.do",
+                    url: "${rc.contextPath}/admin/role/edit.do",
                     data: $form.serialize(),
                     type: "POST",
                     dataType: "json",
                     async: false,
                     success: function(result) {
                         if (result.code == 1) {
-                            window.location.href="${rc.contextPath}/admin/resource/toList.do";
+                            window.location.href="${rc.contextPath}/admin/role/toList.do";
                         }else {
                             toastr.error(result.message)
                         }

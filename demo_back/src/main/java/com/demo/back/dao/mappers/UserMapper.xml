@@ -119,14 +119,6 @@
         </where>
     </select>
 
-    <select id="getCountByCondition" parameterType="User" resultType="int">
-        SELECT count(*) FROM `t_user`
-        <where>
-            1=1
-            <include refid="Base_Query_Column_List" />
-        </where>
-    </select>
-
     <select id="getListByCondition" parameterType="User" resultMap="UserResultMap">
         SELECT * FROM `t_user`
         <where>
@@ -144,6 +136,14 @@
 
             LIMIT #{page.offset}, #{page.limit}
         </if>
+    </select>
+
+    <select id="getCountByCondition" parameterType="User" resultType="int">
+        SELECT count(*) FROM `t_user`
+        <where>
+            1=1
+            <include refid="Base_Query_Column_List" />
+        </where>
     </select>
 
 </mapper>
