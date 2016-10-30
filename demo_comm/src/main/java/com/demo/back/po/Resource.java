@@ -23,14 +23,14 @@ public class Resource implements Serializable{
 	private String name;
 
 	/**
-	 * URL资源描述
-	 */
-	private String desc;
-
-	/**
 	 * URL资源
 	 */
 	private String url;
+
+	/**
+	 * URL资源描述
+	 */
+	private String desc;
 
 	/**
 	 * 级别

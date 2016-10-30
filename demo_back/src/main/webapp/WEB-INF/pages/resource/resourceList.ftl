@@ -69,8 +69,8 @@
                    data-show-columns = true
                    data-striped = true
                    data-page-list = "[10, 20, 50, 100]"
-                   data-url="${rc.contextPath}/admin/role/list.do"
-                   data-delete-url="${rc.contextPath}/admin/role/delete.do"
+                   data-url="${rc.contextPath}/admin/resource/list.do"
+                   data-delete-url="${rc.contextPath}/admin/resource/delete.do"
                    data-unique-id="id"
                    data-id-field="id"
                    >
@@ -105,7 +105,7 @@
            window.myTable.init();
 
            $('#toolbar .JS_add_btn').on('click', function(){
-                window.location.href="${rc.contextPath}/admin/role/toAdd.do";
+                window.location.href="${rc.contextPath}/admin/resource/toAdd.do";
             });
 
            $('#toolbarSearch .JS_search_btn').on('click', function(){
@@ -136,7 +136,7 @@
 
         window.actionEvents = {
             'click .edit': function (e, value, row, index) {
-                window.location.href="${rc.contextPath}/admin/role/toEdit.do?uniqueId=" + row.id;
+                window.location.href="${rc.contextPath}/admin/resource/toEdit.do?uniqueId=" + row.id;
             },
 
             'click .remove': function (e, value, row, index) {

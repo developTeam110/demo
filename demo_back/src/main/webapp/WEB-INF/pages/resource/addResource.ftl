@@ -26,7 +26,7 @@
                     <h5>添加资源</h5>
                 </div>
                 <div class="ibox-content">
-                    <form class="form-horizontal m-t" id="roleForm" action="#">
+                    <form class="form-horizontal m-t" id="resourceForm" action="#">
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">编码：</label>
@@ -41,6 +41,14 @@
                             <div class="col-sm-8">
                                 <input name="name" class="form-control" type="text">
                                 <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>1到64个英文字符</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">URL资源：</label>
+                            <div class="col-sm-8">
+                                <input name="url" class="form-control" type="text">
+                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>1到500个英文字符</span>
                             </div>
                         </div>
 
@@ -75,7 +83,7 @@
     <script>
     $().ready(function(){//jquery init start
 
-        $("#roleForm").validate({
+        $("#resourceForm").validate({
             rules: {
               code: {
                   required: true,
@@ -85,6 +93,10 @@
                   required: true,
                   rangelength:[1,64]
               },
+              url: {
+                  required: true,
+                  rangelength:[1,500]
+              },
               sort: {
                   digits:true
               }
@@ -92,14 +104,14 @@
             submitHandler: function(form) {
                 var $form = $(form);
                 $.ajax({
-                    url: "${rc.contextPath}/admin/role/add.do",
+                    url: "${rc.contextPath}/admin/resource/add.do",
                     data: $form.serialize(),
                     type: "POST",
                     dataType: "json",
                     async: false,
                     success: function(result) {
                         if (result.code == 1) {
-                            window.location.href="${rc.contextPath}/admin/role/toList.do";
+                            window.location.href="${rc.contextPath}/admin/resource/toList.do";
                         }else {
                             toastr.error(result.message)
                         }

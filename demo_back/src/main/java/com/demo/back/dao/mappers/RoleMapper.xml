@@ -45,6 +45,16 @@
         </selectKey>
     </insert>
 
+    <delete id="deleteByIds">
+        DELETE FROM `t_role`
+        <where>
+            `id` IN
+            <foreach collection="ids" close=")" item="id" open="(" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </delete>
+
     <update id="updateById" parameterType="Role">
         UPDATE `t_role`
         <set>
@@ -76,6 +86,14 @@
         </where>
     </select>
 
+    <select id="getCountByCondition" parameterType="Role" resultType="int">
+        SELECT count(*) FROM `t_role`
+        <where>
+            1=1
+            <include refid="Base_Query_Column_List" />
+        </where>
+    </select>
+
     <select id="getListByCondition" parameterType="Role" resultMap="RoleResultMap">
         SELECT * FROM `t_role`
         <where>
@@ -94,23 +112,5 @@
             LIMIT #{page.offset}, #{page.limit}
         </if>
     </select>
-
-    <select id="getCountByCondition" parameterType="Role" resultType="int">
-        SELECT count(*) FROM `t_role`
-        <where>
-            1=1
-            <include refid="Base_Query_Column_List" />
-        </where>
-    </select>
-
-    <delete id="deleteByIds">
-        DELETE FROM `t_role`
-        <where>
-            `id` IN
-            <foreach collection="ids" close=")" item="id" open="(" separator=",">
-                #{id}
-            </foreach>
-        </where>
-    </delete>
 
 </mapper>
