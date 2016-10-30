@@ -108,21 +108,21 @@ $(function() {
         }
         $(".J_menuTabs .J_menuTab").each(function() {
             if ($(this).data("id") == o) {
-            	$(".J_menuTabs .J_menuTab").find("a[data-id="+$(this).data("id")+"]").find("i").click();
-            	exist = true;
-            	return false;
-//                if (!$(this).hasClass("active")) {
-//                    $(this).addClass("active").siblings(".J_menuTab").removeClass("active");
-//                    g(this);
-//                    $(".J_mainContent .J_iframe").each(function() {
-//                        if ($(this).data("id") == o) {
-//                            $(this).show().siblings(".J_iframe").hide();
-//                            return false
-//                        }
-//                    })
-//                }
-//                k = false;
-//                return false
+//            	$(".J_menuTabs .J_menuTab").find("a[data-id="+$(this).data("id")+"]").find("i").click();
+//            	exist = true;
+//            	return false;
+                if (!$(this).hasClass("active")) {
+                    $(this).addClass("active").siblings(".J_menuTab").removeClass("active");
+                    g(this);
+                    $(".J_mainContent .J_iframe").each(function() {
+                        if ($(this).data("id") == o) {
+                            $(this).show().siblings(".J_iframe").hide();
+                            return false
+                        }
+                    })
+                }
+                k = false;
+                return false
             }
         });
 
