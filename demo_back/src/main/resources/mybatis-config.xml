@@ -11,8 +11,15 @@
         <typeAlias alias="Resource" type="com.demo.back.po.Resource" />
     </typeAliases>
 	
-	<!-- 配置插件 -->
 	<plugins>
+		<!--1、 配置分页插件 -->
+	    <plugin interceptor="com.github.pagehelper.PageHelper">
+	        <property name="dialect" value="mysql"/>
+	        <!-- 该参数默认为false -->
+	        <!-- 设置为true时，使用RowBounds分页会进行count查询 -->
+	        <property name="rowBoundsWithCount" value="true"/>
+	    </plugin>
+		<!--2、 配置通用mapper插件 -->
 		  <plugin interceptor="com.github.abel533.mapperhelper.MapperInterceptor">
 		    <!--================================================-->
 		    <!--可配置参数说明(一般无需修改)-->
