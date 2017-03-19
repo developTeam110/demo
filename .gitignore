@@ -1,0 +1,15 @@
+#
+*/product/
+*/.classpath
+*/.project
+*/.settings/
+*/configure/
+*/*/product/
+*/*/.classpath
+*/*/.project
+*/*/.settings/
+**/.iml
+*/*.iml
+*/target/*
+*product
+*.orig
